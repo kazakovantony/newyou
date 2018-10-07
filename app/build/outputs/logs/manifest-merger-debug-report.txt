@@ -1,0 +1,189 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+MERGED from [com.google.dagger:dagger-android-support:2.11] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\dagger-android-support-2.11.aar\689982542876c2e0d3db166754ce2a91\AndroidManifest.xml:16:1-19:12
+MERGED from [com.google.dagger:dagger-android:2.11] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\dagger-android-2.11.aar\6918ce1239f75f8685051d613c014fce\AndroidManifest.xml:16:1-19:12
+MERGED from [com.github.nolia:Noodle:master-SNAPSHOT] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\Noodle-master-SNAPSHOT.aar\59f76ccf23a36cf6559cf60d97fd2559\AndroidManifest.xml:2:1-17:12
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.0.aar\0dac6d3d663f79209395aba9d56a0337\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.0.aar\ec119a5cd76fdf486205a18ee8a1e398\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.0.aar\3803354a2f31a00ace3f328c58a536c5\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.0.aar\10579c62fd749eccce34c4d2e61946a7\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.0.aar\e2fd6573fead0cbce56cdde4258d2fa8\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.0.aar\fcb4a3e980dda053dd801aaec73ebaf7\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.0.aar\ba3baeba8105e95cba678d11c7166176\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.0.aar\406113445cee0fcee7e78cd4aa790fe1\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.0.aar\25a78d64d99191bf9591250ccfbe618f\AndroidManifest.xml:17:1-27:12
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:1-55:12
+	package
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:3:5-37
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:5:5-32
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.BLUETOOTH
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:7:5-68
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:7:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:8:5-74
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:8:22-71
+uses-permission#com.samsung.accessory.permission.ACCESSORY_FRAMEWORK
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:9:5-92
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:9:22-89
+uses-permission#com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:10:5-117
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:10:22-114
+uses-permission#com.samsung.wmanager.ENABLE_NOTIFICATION
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:11:22-77
+uses-permission#com.samsung.WATCH_APP_TYPE.Companion
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:12:5-75
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:12:22-73
+uses-permission#android.permission.INTERNET
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:13:5-66
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:13:22-64
+uses-sdk
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:15:5-17:41
+MERGED from [com.google.dagger:dagger-android-support:2.11] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\dagger-android-support-2.11.aar\689982542876c2e0d3db166754ce2a91\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-android-support:2.11] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\dagger-android-support-2.11.aar\689982542876c2e0d3db166754ce2a91\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-android:2.11] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\dagger-android-2.11.aar\6918ce1239f75f8685051d613c014fce\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-android:2.11] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\dagger-android-2.11.aar\6918ce1239f75f8685051d613c014fce\AndroidManifest.xml:18:3-42
+MERGED from [com.github.nolia:Noodle:master-SNAPSHOT] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\Noodle-master-SNAPSHOT.aar\59f76ccf23a36cf6559cf60d97fd2559\AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.nolia:Noodle:master-SNAPSHOT] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\Noodle-master-SNAPSHOT.aar\59f76ccf23a36cf6559cf60d97fd2559\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.0.aar\0dac6d3d663f79209395aba9d56a0337\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.0.aar\0dac6d3d663f79209395aba9d56a0337\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.0.aar\ec119a5cd76fdf486205a18ee8a1e398\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.0.aar\ec119a5cd76fdf486205a18ee8a1e398\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.0.aar\3803354a2f31a00ace3f328c58a536c5\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.0.aar\3803354a2f31a00ace3f328c58a536c5\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.0.aar\10579c62fd749eccce34c4d2e61946a7\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.0.aar\10579c62fd749eccce34c4d2e61946a7\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.0.aar\e2fd6573fead0cbce56cdde4258d2fa8\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.0.aar\e2fd6573fead0cbce56cdde4258d2fa8\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.0.aar\fcb4a3e980dda053dd801aaec73ebaf7\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.0.aar\fcb4a3e980dda053dd801aaec73ebaf7\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.0.aar\ba3baeba8105e95cba678d11c7166176\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.0.aar\ba3baeba8105e95cba678d11c7166176\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.0.aar\406113445cee0fcee7e78cd4aa790fe1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.0.aar\406113445cee0fcee7e78cd4aa790fe1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.0.aar\25a78d64d99191bf9591250ccfbe618f\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.0.aar\25a78d64d99191bf9591250ccfbe618f\AndroidManifest.xml:21:5-23:58
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:15:5-17:41
+INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:15:5-17:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.0.aar\0dac6d3d663f79209395aba9d56a0337\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:17:9-38
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:16:9-35
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+		INJECTED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml
+application
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:19:5-53:19
+MERGED from [com.github.nolia:Noodle:master-SNAPSHOT] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\Noodle-master-SNAPSHOT.aar\59f76ccf23a36cf6559cf60d97fd2559\AndroidManifest.xml:11:5-15:19
+MERGED from [com.github.nolia:Noodle:master-SNAPSHOT] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\Noodle-master-SNAPSHOT.aar\59f76ccf23a36cf6559cf60d97fd2559\AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.0.aar\0dac6d3d663f79209395aba9d56a0337\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.0.0.aar\0dac6d3d663f79209395aba9d56a0337\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.0.aar\ec119a5cd76fdf486205a18ee8a1e398\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-v4-25.0.0.aar\ec119a5cd76fdf486205a18ee8a1e398\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.0.aar\3803354a2f31a00ace3f328c58a536c5\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.0.0.aar\3803354a2f31a00ace3f328c58a536c5\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.0.aar\10579c62fd749eccce34c4d2e61946a7\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.0.0.aar\10579c62fd749eccce34c4d2e61946a7\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.0.aar\e2fd6573fead0cbce56cdde4258d2fa8\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-fragment-25.0.0.aar\e2fd6573fead0cbce56cdde4258d2fa8\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.0.aar\fcb4a3e980dda053dd801aaec73ebaf7\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.0.0.aar\fcb4a3e980dda053dd801aaec73ebaf7\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.0.aar\ba3baeba8105e95cba678d11c7166176\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.0.0.aar\ba3baeba8105e95cba678d11c7166176\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.0.aar\406113445cee0fcee7e78cd4aa790fe1\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.0.0.aar\406113445cee0fcee7e78cd4aa790fe1\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.0.aar\25a78d64d99191bf9591250ccfbe618f\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.0] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\support-compat-25.0.0.aar\25a78d64d99191bf9591250ccfbe618f\AndroidManifest.xml:25:5-20
+	android:supportsRtl
+		ADDED from [com.github.nolia:Noodle:master-SNAPSHOT] C:\Users\Anton\.gradle\caches\transforms-1\files-1.1\Noodle-master-SNAPSHOT.aar\59f76ccf23a36cf6559cf60d97fd2559\AndroidManifest.xml:14:9-35
+	android:label
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:23:9-41
+	android:icon
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:22:9-43
+	android:allowBackup
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:21:9-35
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:20:9-28
+activity#com.itbulls.newyou.app.view.component.base.impl.view.TestDataView
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:24:9-32:20
+	android:screenOrientation
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:27:13-49
+	android:label
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:26:13-45
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:25:13-93
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:28:13-31:29
+action#android.intent.action.MAIN
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:29:17-69
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:29:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:30:17-77
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:30:27-74
+service#com.itbulls.newyou.app.service.WatchConnectionService
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:34:9-67
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:34:18-64
+receiver#com.samsung.android.sdk.accessory.RegisterUponInstallReceiver
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:36:9-40:20
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:36:19-95
+intent-filter#action:name:com.samsung.accessory.action.REGISTER_AGENT
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:37:13-39:29
+action#com.samsung.accessory.action.REGISTER_AGENT
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:38:17-86
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:38:25-83
+receiver#com.samsung.android.sdk.accessory.ServiceConnectionIndicationBroadcastReceiver
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:41:9-45:20
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:41:19-112
+intent-filter#action:name:com.samsung.accessory.action.SERVICE_CONNECTION_REQUESTED
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:42:13-44:29
+action#com.samsung.accessory.action.SERVICE_CONNECTION_REQUESTED
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:43:17-100
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:43:25-97
+meta-data#AccessoryServicesLocation
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:47:9-49:62
+	android:value
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:49:13-59
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:48:13-53
+meta-data#GearAppType
+ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:50:9-52:35
+	android:value
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:52:13-32
+	android:name
+		ADDED from D:\android\mobile-ny\app\src\main\AndroidManifest.xml:51:13-39
