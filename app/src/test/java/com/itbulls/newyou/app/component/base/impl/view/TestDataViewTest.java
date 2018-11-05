@@ -39,13 +39,12 @@ public class TestDataViewTest {
     @Mock
     ServiceConnectionListener serviceConnectionListener;
     @Mock
-    Gson gson;
-    @Mock
     JsonService jsonService;
     @InjectMocks
     TestDataView testDataView = new TestDataView();
 
     @Test
     public void shouldStart() {
+        assert true;
     }
 }
