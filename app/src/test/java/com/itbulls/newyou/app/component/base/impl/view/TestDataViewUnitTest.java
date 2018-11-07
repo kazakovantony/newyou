@@ -2,7 +2,6 @@ package com.itbulls.newyou.app.component.base.impl.view;
 
 import android.widget.ListView;
 
-import com.google.gson.Gson;
 import com.itbulls.newyou.app.listener.ServiceConnectionListener;
 import com.itbulls.newyou.app.model.WorkoutState;
 import com.itbulls.newyou.app.service.DataService;
@@ -20,7 +19,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestDataViewTest {
+public class TestDataViewUnitTest {
 
     @Mock
     EventService eventService;
