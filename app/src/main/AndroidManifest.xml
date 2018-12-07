@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.itbulls.newyou.app"
+    package="com.kazakov.newyou.app"
     android:versionCode="4"
     android:versionName="2.0.2" >
 
@@ -13,12 +13,12 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".App"
+        android:name="com.kazakov.newyou.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="com.itbulls.newyou.app.view.component.base.impl.view.TestDataView"
+            android:name="com.kazakov.newyou.app.view.component.base.impl.view.TestDataView"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.WatchConnectionService" />
+        <service android:name="com.kazakov.newyou.app.service.WatchConnectionService" />
 
         <receiver android:name="com.samsung.android.sdk.accessory.RegisterUponInstallReceiver" >
             <intent-filter>
