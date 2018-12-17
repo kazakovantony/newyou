@@ -51,5 +51,5 @@ dependencies {
     androidTestImplementation "androidx.test:rules:${JUNIT_RUNNER_VERSION}"
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
-    androidTestImplementation "org.mockito:mockito-android:${MOCKITO_VERSION}"
+    androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
 }

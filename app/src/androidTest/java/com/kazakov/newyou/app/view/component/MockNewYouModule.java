@@ -41,37 +41,37 @@ public class MockNewYouModule {
     @Provides
     @Singleton
     EventService provideEventService() {
-        return Mockito.mock(EventService.class);
+        return new EventService();
     }
 
     @Provides
     @Singleton
     ServiceConnectionListener provideServiceConnectionListener() {
-        return Mockito.mock(ServiceConnectionListener.class);
+        return new ServiceConnectionListener();
     }
 
     @Provides
     @Singleton
     WorkoutState provideWorkoutState() {
-        return Mockito.mock(WorkoutState.class);
+        return new WorkoutState();
     }
 
     @Provides
     @Singleton
     WatchServiceProvider provideWatchConnectionService() {
-        return Mockito.mock(WatchServiceProvider.class);
+        return new WatchServiceProvider();
     }
 
     @Provides
     @Singleton
     Noodle provideNoodle() {
-        return Mockito.mock(Noodle.class);
+        return new Noodle(null);
     }
 
     @Provides
     @Singleton
     Gson provideGson() {
-        return Mockito.mock(Gson.class);
+        return new Gson();
     }
 
     @Provides
@@ -83,19 +83,19 @@ public class MockNewYouModule {
     @Provides
     @Singleton
     PredictorService providePredictorService() {
-        return Mockito.mock(PredictorService.class);
+        return new PredictorService(null, null);
     }
 
     @Provides
     @Singleton
     DataService provideDataService() {
-        return Mockito.mock(DataService.class);
+        return new DataService(null);
     }
 
     @Provides
     @Singleton
     JsonService provideJson() {
-        return Mockito.mock(JsonService.class);
+        return new JsonService(null);
     }
 
     public void setApp(App app) {
