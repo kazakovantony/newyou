@@ -1,16 +1,28 @@
 package com.kazakov.newyou.app.view.component.base.impl.view;
 
+import android.app.Instrumentation;
+
+import com.kazakov.newyou.app.App;
+import com.kazakov.newyou.app.view.component.NewYouTestComponent;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+import okhttp3.OkHttpClient;
 
 
 @RunWith(AndroidJUnit4.class)
 public class TestDataViewTest {
+
+    @Inject
+    OkHttpClient okHttpClient;
 
     @Rule
     public ActivityTestRule<TestDataView> activityRule = new ActivityTestRule<>(
@@ -19,11 +31,10 @@ public class TestDataViewTest {
     @Before
     public void setUp() {
         System.out.println("Before");
-//        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-  //      DemoApplication app
-   //             = (DemoApplication) instrumentation.getTargetContext().getApplicationContext();
-     //   TestComponent component = (TestComponent) app.component();
-       // component.inject(this);
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        NewYouTestComponent component = (NewYouTestComponent) App
+               .getComponent(instrumentation.getTargetContext().getApplicationContext());
+        component.inject(this);
     }
 
     @Test

@@ -9,16 +9,12 @@ import com.kazakov.newyou.app.component.NewYouModule;
 
 public class App extends Application {
 
-    private NewYouComponent component;
+    private NewYouComponent component = createComponent();
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    protected NewYouComponent createComponent() {
         NewYouModule module = new NewYouModule();
         module.setApp(this);
-        component = DaggerNewYouComponent.builder()
-                .newYouModule(module)
-                .build();
+        return DaggerNewYouComponent.builder().newYouModule(module).build();
     }
 
     public static NewYouComponent getComponent(Context context) {
