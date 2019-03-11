@@ -21,20 +21,32 @@ public class DataService {
         sensorData.forEach(e -> noodle.collectionOf(SensorsRecord.class).put(e).now());
     }
 
-    public List<SensorsRecord> extractSensorsData() {
-        return noodle.collectionOf(SensorsRecord.class).all().now();
+    public <T> List<T> extractDataByType(Class<T> type) {
+        return noodle.collectionOf(type).all().now();
     }
 
     public void storeTraine(Workout workout) {
         noodle.collectionOf(Workout.class).put(workout).now();
     }
 
-    public void deleteSensorData(List<SensorsRecord> forDelete) {
-        forDelete.forEach(e -> noodle.collectionOf(SensorsRecord.class).delete(e.id).now());
+    public <T> void deleteData(List<T> forDelete, Class<T> type) {
+        forDelete.forEach(e -> {
+            try {
+                noodle.collectionOf(type).delete(type.getField("id").getLong(e)).now();
+            } catch (IllegalAccessException e1) {
+                e1.printStackTrace();
+            } catch (NoSuchFieldException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     public void storeWorkout(Workout workout) {
         noodle.collectionOf(Workout.class).put(workout).now();
+    }
+
+    public <T> void deleteCollection(Class<T> type) {
+        deleteData(extractDataByType(type), type);
     }
 }
 

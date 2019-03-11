@@ -5,11 +5,15 @@ import android.app.Application;
 import com.google.gson.Gson;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
+import com.kazakov.newyou.app.model.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
-import com.kazakov.newyou.app.service.WatchServiceProvider;
+import com.kazakov.newyou.app.service.WatchConnectionProvider;
+import com.kazakov.newyou.app.service.WatchConnectionService;
+import com.kazakov.newyou.app.service.WatchConnectionServiceStub;
+import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.noodle.Noodle;
 
@@ -58,14 +62,15 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    WatchServiceProvider provideWatchConnectionService() {
-        return new WatchServiceProvider();
+    WatchServiceHolder provideWatchConnectionService() {
+        return new WatchServiceHolder();
     }
 
     @Provides
     @Singleton
     Noodle provideNoodle() {
-        return new Noodle(null);
+        return Noodle.with(app.getBaseContext())
+                .addType(SensorsRecord.class).build();
     }
 
     @Provides
@@ -88,14 +93,20 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    DataService provideDataService() {
-        return new DataService(null);
+    DataService provideDataService(Noodle noodle) {
+        return new DataService(noodle);
     }
 
     @Provides
     @Singleton
     JsonService provideJson() {
-        return new JsonService(null);
+        return new JsonService(new Gson());
+    }
+
+    @Provides
+    @Singleton
+    WatchConnectionProvider watchConnectionProvider() {
+        return new WatchConnectionProvider(() -> WatchConnectionServiceStub.class);
     }
 
     public void setApp(App app) {

@@ -7,7 +7,7 @@ import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
-import com.kazakov.newyou.app.service.WatchServiceProvider;
+import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.view.component.base.impl.MessageAdapter;
 import com.kazakov.newyou.app.view.component.base.impl.view.TestDataView;
@@ -32,7 +32,7 @@ public class TestDataViewUnitTest {
     @Mock
     PredictorService predictorService;
     @Mock
-    WatchServiceProvider watchConnectionServiceProvider;
+    WatchServiceHolder watchConnectionServiceProvider;
     @Mock
     WorkoutState workoutState;
     @Mock

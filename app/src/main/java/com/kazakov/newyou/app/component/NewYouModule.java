@@ -12,7 +12,9 @@ import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
-import com.kazakov.newyou.app.service.WatchServiceProvider;
+import com.kazakov.newyou.app.service.WatchConnectionProvider;
+import com.kazakov.newyou.app.service.WatchConnectionService;
+import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.noodle.Noodle;
 
@@ -61,8 +63,8 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    WatchServiceProvider provideWatchConnectionService() {
-        return new WatchServiceProvider();
+    WatchServiceHolder provideWatchConnectionService() {
+        return new WatchServiceHolder();
     }
 
     @Provides
@@ -105,6 +107,12 @@ public class NewYouModule {
     @Singleton
     JsonService provideJson(WorkoutState workoutState, Noodle noodle) {
         return new JsonService(new Gson());
+    }
+
+    @Provides
+    @Singleton
+    WatchConnectionProvider watchConnectionProvider() {
+        return new WatchConnectionProvider(() -> WatchConnectionService.class);
     }
 
     public void setApp(App app) {

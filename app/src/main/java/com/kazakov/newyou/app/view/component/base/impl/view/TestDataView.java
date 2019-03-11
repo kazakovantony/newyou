@@ -22,14 +22,16 @@ import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
+import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchConnectionService;
-import com.kazakov.newyou.app.service.WatchServiceProvider;
+import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -46,24 +48,37 @@ public class TestDataView extends Activity {
     @Inject
     PredictorService predictorService;
     @Inject
-    WatchServiceProvider watchConnectionServiceProvider;
+    WatchServiceHolder watchConnectionServiceHolder;
     @Inject
     WorkoutState workoutState;
     @Inject
     ServiceConnectionListener serviceConnectionListener;
     @Inject
     JsonService jsonService;
+    @Inject
+    WatchConnectionProvider watchConnectionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+/*
+refactor it to show these steps:
+        1 inject dependencies
+        2 init views
+        3 bind event handlers
+        4 init watch data listener
+        4.1 init android connection
+        4.2 init Watch Connection Service during android connection -> initiated by android -> spy should created (current implementation requires provider)
+        4.3 on receiving connection success with gear we get listener (SocketListener) with onReceive event
+*/
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         App.getComponent(this).inject(this);
 
-        workoutState.setBound(bindService(new Intent(TestDataView.this, WatchConnectionService.class),
+        workoutState.setBound(bindService(new Intent(this, watchConnectionProvider.take()),
                 serviceConnectionListener, Context.BIND_AUTO_CREATE));
         initWorkoutsView();
-        serviceConnectionListener.setWatchServiceProvider(watchConnectionServiceProvider);
+        serviceConnectionListener.setWatchServiceHolder(watchConnectionServiceHolder);
         bindHandlersOnEvents();
     }
 
@@ -93,7 +108,7 @@ public class TestDataView extends Activity {
     }
 
     private void stopWorkout() throws IOException {
-        if (watchConnectionServiceProvider.getWatchConnectionService().closeConnection()) {
+        if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
             ((Button) findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
             workoutState.setActive(false);
             doPredict();
@@ -101,10 +116,10 @@ public class TestDataView extends Activity {
     }
 
     private void startWorkout() throws InterruptedException {
-        watchConnectionServiceProvider.getWatchConnectionService().setEventService(eventService);
-        watchConnectionServiceProvider.getWatchConnectionService().findPeers();
+        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService);
+        watchConnectionServiceHolder.getWatchConnectionService().findPeers();
         TimeUnit.SECONDS.sleep(10);
-        if (!watchConnectionServiceProvider.getWatchConnectionService().sendData(START)) {
+        if (!watchConnectionServiceHolder.getWatchConnectionService().sendData(START)) {
             Toast.makeText(getApplicationContext(),
                     R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
         } else {
@@ -114,9 +129,9 @@ public class TestDataView extends Activity {
     }
 
     private void doPredict() throws IOException {
-        List<SensorsRecord> forPredict = dataService.extractSensorsData();
+        List<SensorsRecord> forPredict = dataService.extractDataByType(SensorsRecord.class);
         List<PredictionResult> predictedGymActivity = predictorService.predict(forPredict);
-        dataService.deleteSensorData(forPredict);
+        dataService.deleteData(forPredict, SensorsRecord.class);
         dataService.storeWorkout(Workout.create(predictedGymActivity));
         updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
     }

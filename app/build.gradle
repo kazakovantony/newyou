@@ -27,6 +27,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['src/test/res']
+        }
+        androidTest {
+            resources.srcDirs += ['src/androidTest/res']
+        }
+    }
 }
 
 final DAGGER_VERSION = '2.19'
@@ -36,6 +45,7 @@ final MOCKITO_VERSION = '2.23.4'
 dependencies {
     implementation "com.google.dagger:dagger-android:${DAGGER_VERSION}"
     implementation "com.google.dagger:dagger-android-support:${DAGGER_VERSION}"
+    implementation 'commons-io:commons-io:2.4'
     annotationProcessor "com.google.dagger:dagger-android-processor:${DAGGER_VERSION}"
     annotationProcessor "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 

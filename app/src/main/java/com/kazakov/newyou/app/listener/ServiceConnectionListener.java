@@ -5,16 +5,16 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 
 import com.kazakov.newyou.app.service.WatchConnectionService;
-import com.kazakov.newyou.app.service.WatchServiceProvider;
+import com.kazakov.newyou.app.service.WatchServiceHolder;
 
 
 public class ServiceConnectionListener implements ServiceConnection {
 
-    WatchServiceProvider watchServiceProvider;
+    WatchServiceHolder watchServiceHolder;
 
     @Override
     public void onServiceConnected(ComponentName className, IBinder service) {
-        watchServiceProvider
+        watchServiceHolder
                 .setWatchConnectionService(((WatchConnectionService.LocalBinder) service).getThis());
 
     }
@@ -27,7 +27,7 @@ public class ServiceConnectionListener implements ServiceConnection {
   */
     }
 
-    public synchronized void setWatchServiceProvider(WatchServiceProvider watchServiceProvider) {
-        this.watchServiceProvider = watchServiceProvider;
+    public synchronized void setWatchServiceHolder(WatchServiceHolder watchServiceHolder) {
+        this.watchServiceHolder = watchServiceHolder;
     }
 }

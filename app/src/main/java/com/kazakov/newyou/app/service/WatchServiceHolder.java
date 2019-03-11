@@ -1,6 +1,6 @@
 package com.kazakov.newyou.app.service;
 
-public class WatchServiceProvider {
+public class WatchServiceHolder {
 
     private WatchConnectionService watchConnectionService;
 
