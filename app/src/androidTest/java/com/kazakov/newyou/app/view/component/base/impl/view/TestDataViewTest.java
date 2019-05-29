@@ -59,11 +59,12 @@ public class TestDataViewTest {
     }
 
     @Test
-    public void Given_WorkoutActivityData_When_Received_Then_StoreToDataBase() throws IOException {
+    public void Given_WorkoutActivityData_When_Received_Then_StoreToDataBase_Do_Predict() throws IOException {
         activityRule.launchActivity(new Intent());
         String json = readFile();
         eventService.triggerEvent(new DataReceiveEvent(json.getBytes()));
         List<SensorsRecord> sensorsRecordList = dataService.extractDataByType(SensorsRecord.class);
+        //prediction logic goes here
         assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size());
     }
 

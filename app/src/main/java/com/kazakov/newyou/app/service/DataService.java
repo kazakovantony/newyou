@@ -18,21 +18,21 @@ public class DataService {
     }
 
     public void storeSensorsData(List<SensorsRecord> sensorData) {
-        sensorData.forEach(e -> noodle.collectionOf(SensorsRecord.class).put(e).now());
+        sensorData.forEach(e -> noodle.collectionOf(SensorsRecord.class).put(e));
     }
 
     public <T> List<T> extractDataByType(Class<T> type) {
-        return noodle.collectionOf(type).all().now();
+        return noodle.collectionOf(type).getAll();
     }
 
     public void storeTraine(Workout workout) {
-        noodle.collectionOf(Workout.class).put(workout).now();
+        noodle.collectionOf(Workout.class).put(workout);
     }
 
     public <T> void deleteData(List<T> forDelete, Class<T> type) {
         forDelete.forEach(e -> {
             try {
-                noodle.collectionOf(type).delete(type.getField("id").getLong(e)).now();
+                noodle.collectionOf(type).delete(type.getField("id").getLong(e));
             } catch (IllegalAccessException e1) {
                 e1.printStackTrace();
             } catch (NoSuchFieldException e1) {
@@ -42,7 +42,7 @@ public class DataService {
     }
 
     public void storeWorkout(Workout workout) {
-        noodle.collectionOf(Workout.class).put(workout).now();
+        noodle.collectionOf(Workout.class).put(workout);
     }
 
     public <T> void deleteCollection(Class<T> type) {
