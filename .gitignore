@@ -1,9 +1,3 @@
-# Intellij
-.idea/
-*.iml
-*.iws
-
-#android
 *.iml
 .gradle
 /local.properties
@@ -11,11 +5,5 @@
 /.idea/libraries
 .DS_Store
 /build
-/app/build/
-/app/libs/
 /captures
 .externalNativeBuild
-.idea/
-gradle/
-gradlew
-gradlew.bat

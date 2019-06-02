@@ -1,16 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="app_name">Tablayout</string>
 
-    <string name="app_name">NewYou(C)</string>
-    <string name="hello_world">Hello Accessory!</string>
-    <string name="ConnectionEstablishedMsg">Connection with smart watch has been established.</string>
-    <string name="ConnectionTerminateddMsg">Connection with smart watch has been terminated.</string>
-    <string name="ConnectionAlreadyExist">Connection has already been existed!!!</string>
-    <string name="ConnectionAlreadyDisconnected">Connection has already been disconnected!!!</string>
-    <string name="ConnectionFailure">Connection Failure</string>
-    <string name="NoPeersFound">No peers have been found!!!</string>
-    <string name="buttonConnect">Connect</string>
-    <string name="buttonStop">Stop</string>
-    <string name="buttonStart">Start</string>
-    <string name="watchIsNotReachable">Watch is not reachable</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
