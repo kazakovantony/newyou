@@ -38,7 +38,6 @@ import javax.inject.Inject;
 
 public class TestDataView extends Activity {
 
-    static final String START = "START";
     @Inject
     EventService eventService;
     ListView listView;
@@ -84,7 +83,7 @@ refactor it to show these steps:
 
     private void bindHandlersOnEvents() {
         eventService.addEventHandler(this::dataReceiveHandle, DataReceiveEvent.class);
-        eventService.addEventHandler(this::updateTextViewHandle, UpdateViewEvent.class);
+       // eventService.addEventHandler(this::updateTextViewHandle, UpdateViewEvent.class);
     }
 
     private void initWorkoutsView() {
@@ -93,59 +92,12 @@ refactor it to show these steps:
         listView.setAdapter(workouts);
     }
 
-    public void buttonChangeMode(View view) throws IOException, InterruptedException {
-
-        if (workoutState.isBound()) {
-            if (workoutState.isActive()) {
-                stopWorkout();
-            } else {
-                startWorkout();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void stopWorkout() throws IOException {
-        if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
-            ((Button) findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
-            workoutState.setActive(false);
-            doPredict();
-        }
-    }
-
-    private void startWorkout() throws InterruptedException {
-        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService);
-        watchConnectionServiceHolder.getWatchConnectionService().findPeers();
-        TimeUnit.SECONDS.sleep(10);
-        if (!watchConnectionServiceHolder.getWatchConnectionService().sendData(START)) {
-            Toast.makeText(getApplicationContext(),
-                    R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
-        } else {
-            workoutState.setActive(true);
-            ((Button) findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStop);
-        }
-    }
-
-    private void doPredict() throws IOException {
-        List<SensorsRecord> forPredict = dataService.extractDataByType(SensorsRecord.class);
-        List<PredictionResult> predictedGymActivity = predictorService.predict(forPredict);
-        dataService.deleteData(forPredict, SensorsRecord.class);
-        dataService.storeWorkout(Workout.create(predictedGymActivity));
-        updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
-    }
-
     private void dataReceiveHandle(DataReceiveEvent dataReceiveEvent) {
         //runOnUiThread(messageAdapter.addMessageTask(dataReceiveEvent.getMessage()));
         //messagesView.setSelection(messageAdapter.getCount() - 1);
         List<SensorsRecord> sensorsRecords = jsonService
                 .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage());
         dataService.storeSensorsData(sensorsRecords);
-    }
-
-    private void updateTextViewHandle(UpdateViewEvent event) {
-        runOnUiThread(() -> workouts.add(event.getUpdateText()));
     }
 
     private String getTextViewText(int id) {

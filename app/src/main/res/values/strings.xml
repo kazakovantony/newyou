@@ -11,6 +11,6 @@
     <string name="NoPeersFound">No peers have been found!!!</string>
     <string name="buttonConnect">Connect</string>
     <string name="buttonStop">Stop</string>
-    <string name="buttonStart">Start</string>
     <string name="watchIsNotReachable">Watch is not reachable</string>
+    <string name="buttonStart">Start</string>
 </resources>
