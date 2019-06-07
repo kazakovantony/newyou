@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +31,7 @@ import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
+import com.kazakov.newyou.app.view.component.base.impl.PageAdapter;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-public class TestDataView extends Activity {
+public class TestDataView extends AppCompatActivity {
 
     @Inject
     EventService eventService;
@@ -56,6 +60,8 @@ public class TestDataView extends Activity {
     JsonService jsonService;
     @Inject
     WatchConnectionProvider watchConnectionProvider;
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,8 @@ refactor it to show these steps:
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tabLayout = findViewById(R.id.tablayout);
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
         App.getComponent(this).inject(this);
 
         workoutState.setBound(bindService(new Intent(this, watchConnectionProvider.take()),
