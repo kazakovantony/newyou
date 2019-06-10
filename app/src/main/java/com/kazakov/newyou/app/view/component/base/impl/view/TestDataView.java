@@ -62,7 +62,7 @@ public class TestDataView extends AppCompatActivity {
     JsonService jsonService;
     @Inject
     WatchConnectionProvider watchConnectionProvider;
-    Toolbar toolbar;
+   // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
     TabItem tabChats;
@@ -86,7 +86,17 @@ refactor it to show these steps:
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tablayout);
-        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
+
+
+     //   setSupportActionBar(toolbar);
+
+        tabChats = findViewById(R.id.tabWorkout);
+        tabStatus = findViewById(R.id.tabPrediction);
+        viewPager = findViewById(R.id.viewPager);
+
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapter);
+
         App.getComponent(this).inject(this);
 
         workoutState.setBound(bindService(new Intent(this, watchConnectionProvider.take()),
@@ -102,9 +112,10 @@ refactor it to show these steps:
     }
 
     private void initWorkoutsView() {
-        workouts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
-        listView = findViewById(R.id.workouts);
-        listView.setAdapter(workouts);
+        //part of workout tab
+       // workouts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        //listView = findViewById(R.id.workouts);
+        //listView.setAdapter(workouts);
     }
 
     private void dataReceiveHandle(DataReceiveEvent dataReceiveEvent) {
