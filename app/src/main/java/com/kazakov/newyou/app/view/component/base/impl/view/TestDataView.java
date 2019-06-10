@@ -3,9 +3,11 @@ package com.kazakov.newyou.app.view.component.base.impl.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -104,6 +106,53 @@ refactor it to show these steps:
         initWorkoutsView();
         serviceConnectionListener.setWatchServiceHolder(watchConnectionServiceHolder);
         bindHandlersOnEvents();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1) {
+                    //toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
+                      //      R.color.colorAccent));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
+                            R.color.colorAccent));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(TestDataView.this,
+                                R.color.colorAccent));
+                    }
+                } else if (tab.getPosition() == 2) {
+                    //toolbar.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
+                      //      android.R.color.darker_gray));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
+                            android.R.color.darker_gray));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(TestDataView.this,
+                                android.R.color.darker_gray));
+                    }
+                } else {
+                   // toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
+                     //       R.color.colorPrimary));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
+                            R.color.colorPrimary));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(TestDataView.this,
+                                R.color.colorPrimaryDark));
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
     private void bindHandlersOnEvents() {
