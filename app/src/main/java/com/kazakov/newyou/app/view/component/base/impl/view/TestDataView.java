@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
@@ -60,8 +62,13 @@ public class TestDataView extends AppCompatActivity {
     JsonService jsonService;
     @Inject
     WatchConnectionProvider watchConnectionProvider;
+    Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
+    TabItem tabChats;
+    TabItem tabStatus;
+    PageAdapter pageAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
