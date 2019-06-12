@@ -13,14 +13,17 @@ tools:context="com.kazakov.newyou.app.view.component.base.impl.view.WorkoutView"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonChangeMode"
-        android:layout_width="fill_parent"
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="buttonChangeMode"
-        android:text="@string/buttonStart"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:layout_gravity="center_horizontal"
+        android:checked="true"
+        android:drawablePadding="20dp"
+        android:textColor="#000"
+        android:textOff="Start"
+        android:textOn="Stop"
+        />
 
     <ListView
         android:id="@+id/workouts"

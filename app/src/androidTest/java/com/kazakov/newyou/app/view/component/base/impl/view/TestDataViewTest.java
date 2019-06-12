@@ -2,11 +2,15 @@ package com.kazakov.newyou.app.view.component.base.impl.view;
 
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.widget.Button;
 
 import com.kazakov.newyou.app.App;
+import com.kazakov.newyou.app.R;
+import com.kazakov.newyou.app.model.PredictionResult;
 import com.kazakov.newyou.app.model.SensorsRecord;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
+import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.view.component.NewYouTestComponent;
@@ -40,6 +44,8 @@ public class TestDataViewTest {
     DataService dataService;
     @Inject
     JsonService jsonService;
+    @Inject
+    PredictorService predictorService;
 
     @Rule
     public ActivityTestRule<TestDataView> activityRule = new ActivityTestRule<>(
@@ -64,8 +70,17 @@ public class TestDataViewTest {
         String json = readFile();
         eventService.triggerEvent(new DataReceiveEvent(json.getBytes()));
         List<SensorsRecord> sensorsRecordList = dataService.extractDataByType(SensorsRecord.class);
-        //prediction logic goes here
         assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size());
+
+        Button changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
+        changeMode.callOnClick();
+
+        // prediction logic goes here
+        // mock prediction service
+        // click stop button
+        // check predict layout structure
+        // do relearning
+
     }
 
     private String readFile() throws IOException {

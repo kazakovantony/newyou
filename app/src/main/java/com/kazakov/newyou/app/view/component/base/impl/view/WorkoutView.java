@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.PredictionResult;
@@ -46,10 +49,33 @@ public class WorkoutView extends Fragment {
 
     ArrayAdapter<String> workouts;
 
+    FrameLayout currentFrame;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
+        currentFrame = (FrameLayout) inflater.inflate(R.layout.fragment_workout, container, false);
+
+        final ToggleButton toggle = currentFrame.findViewById(R.id.toggleButton);
+
+        toggle.setOnClickListener(view -> {
+            if (toggle.isChecked()) {
+                try {
+                    startWorkout();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    stopWorkout();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         return inflater.inflate(R.layout.fragment_workout, container, false);
     }
 
@@ -62,15 +88,15 @@ public class WorkoutView extends Fragment {
         return true;
     }
 
-    private void stopWorkout() throws IOException {
+    public void stopWorkout() throws IOException {
         if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
-            ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
+          //  ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
             workoutState.setActive(false);
             doPredict();
         }
     }
 
-    private void startWorkout() throws InterruptedException {
+    public void startWorkout() throws InterruptedException {
         watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService);
         watchConnectionServiceHolder.getWatchConnectionService().findPeers();
         TimeUnit.SECONDS.sleep(10);
@@ -79,7 +105,7 @@ public class WorkoutView extends Fragment {
                     R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
         } else {
             workoutState.setActive(true);
-            ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStop);
+            //((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStop);
         }
     }
 
