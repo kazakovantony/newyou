@@ -1,6 +1,5 @@
 package com.kazakov.newyou.app.view.component.base.impl.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -12,11 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
@@ -24,23 +20,17 @@ import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.GymActivity;
 import com.kazakov.newyou.app.model.PredictionResult;
 import com.kazakov.newyou.app.model.SensorsRecord;
-import com.kazakov.newyou.app.model.Workout;
 import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
-import com.kazakov.newyou.app.service.WatchConnectionService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
-import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
 import com.kazakov.newyou.app.view.component.base.impl.PageAdapter;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -67,8 +57,8 @@ public class TestDataView extends AppCompatActivity {
    // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
-    TabItem tabChats;
-    TabItem tabStatus;
+    TabItem workoutTab;
+    TabItem predictionTab;
     PageAdapter pageAdapter;
 
 
@@ -92,8 +82,8 @@ refactor it to show these steps:
 
      //   setSupportActionBar(toolbar);
 
-        tabChats = findViewById(R.id.tabWorkout);
-        tabStatus = findViewById(R.id.tabPrediction);
+        workoutTab = findViewById(R.id.tabWorkout);
+        predictionTab = findViewById(R.id.tabPrediction);
         viewPager = findViewById(R.id.viewPager);
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -131,6 +121,7 @@ refactor it to show these steps:
                                 android.R.color.darker_gray));
                     }
                 } else {
+
                    // toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
                      //       R.color.colorPrimary));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,

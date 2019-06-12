@@ -21,9 +21,9 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new PredictionView();
-            case 1:
                 return new WorkoutView();
+            case 1:
+                return new PredictionView();
             default:
                 return null;
         }
