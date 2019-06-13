@@ -61,10 +61,14 @@ public class WorkoutView extends Fragment {
         final ToggleButton toggle = currentFrame.findViewById(R.id.toggleButton);
 
         toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked) {
-                System.out.println("alarmCheck ALARM SET TO TRUE");
-            } else {
-                System.out.println("alarmCheck ALARM SET TO FALSE");
+            try {
+                if (isChecked) {
+                    stopWorkout();
+                } else {
+                    startWorkout();
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
@@ -82,16 +86,15 @@ public class WorkoutView extends Fragment {
 
     public void stopWorkout() throws IOException {
         if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
-          //  ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
+            //  ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
             workoutState.setActive(false);
             doPredict();
         }
     }
 
     public void startWorkout() throws InterruptedException {
-        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService);
-        watchConnectionServiceHolder.getWatchConnectionService().findPeers();
-        TimeUnit.SECONDS.sleep(10);
+        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService); // it should be done during init, not start workout
+        watchConnectionServiceHolder.getWatchConnectionService().findPeers(); // it should be done during init, not start workout
         if (!watchConnectionServiceHolder.getWatchConnectionService().sendData(START)) {
             Toast.makeText(getActivity().getApplicationContext(),
                     R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();

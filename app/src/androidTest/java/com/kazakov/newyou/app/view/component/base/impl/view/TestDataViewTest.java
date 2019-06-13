@@ -3,6 +3,7 @@ package com.kazakov.newyou.app.view.component.base.impl.view;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
@@ -68,13 +69,12 @@ public class TestDataViewTest {
     public void Given_WorkoutActivityData_When_Received_Then_StoreToDataBase_Do_Predict() throws IOException {
         activityRule.launchActivity(new Intent());
         String json = readFile();
-        eventService.triggerEvent(new DataReceiveEvent(json.getBytes()));
+        ToggleButton changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
+        changeMode.performClick(); // start workout
+        eventService.triggerEvent(new DataReceiveEvent(json.getBytes())); // emulate data receiving
         List<SensorsRecord> sensorsRecordList = dataService.extractDataByType(SensorsRecord.class);
-        assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size());
-
-        Button changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
-        changeMode.callOnClick();
-
+        assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size()); // it is redundant, check exists during stop workout
+        changeMode.performClick(); // stop workout
         // prediction logic goes here
         // mock prediction service
         // click stop button
