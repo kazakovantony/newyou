@@ -60,23 +60,15 @@ public class WorkoutView extends Fragment {
 
         final ToggleButton toggle = currentFrame.findViewById(R.id.toggleButton);
 
-        toggle.setOnClickListener(view -> {
-            if (toggle.isChecked()) {
-                try {
-                    startWorkout();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                System.out.println("alarmCheck ALARM SET TO TRUE");
             } else {
-                try {
-                    stopWorkout();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                System.out.println("alarmCheck ALARM SET TO FALSE");
             }
         });
 
-        return inflater.inflate(R.layout.fragment_workout, container, false);
+        return currentFrame;
     }
 
     @Override
