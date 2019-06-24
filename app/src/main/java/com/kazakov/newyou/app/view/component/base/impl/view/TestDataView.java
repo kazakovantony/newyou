@@ -2,6 +2,7 @@ package com.kazakov.newyou.app.view.component.base.impl.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kazakov.newyou.app.App;
+import com.kazakov.newyou.app.BuildConfig;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.GymActivity;
@@ -79,9 +81,7 @@ refactor it to show these steps:
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tablayout);
 
-
      //   setSupportActionBar(toolbar);
-
         workoutTab = findViewById(R.id.tabWorkout);
         predictionTab = findViewById(R.id.tabPrediction);
         viewPager = findViewById(R.id.viewPager);
@@ -100,7 +100,6 @@ refactor it to show these steps:
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
                     //toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,

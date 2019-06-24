@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.App;
+import com.kazakov.newyou.app.BuildConfig;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.PredictionResult;
 import com.kazakov.newyou.app.model.SensorsRecord;
@@ -71,15 +72,17 @@ public class TestDataViewTest {
         String json = readFile();
         ToggleButton changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
         changeMode.performClick(); // start workout
-        eventService.triggerEvent(new DataReceiveEvent(json.getBytes())); // emulate data receiving
+        eventService.triggerEvent(new DataReceiveEvent(json.getBytes())); // emlulate data receiving
         List<SensorsRecord> sensorsRecordList = dataService.extractDataByType(SensorsRecord.class);
         assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size()); // it is redundant, check exists during stop workout
         changeMode.performClick(); // stop workout
+        bUI
         // prediction logic goes here
         // mock prediction service
         // click stop button
         // check predict layout structure
         // do relearning
+        //spring test profile for test configuration
 
     }
 

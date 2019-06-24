@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.kazakov.newyou.app.App;
+import com.kazakov.newyou.app.BuildConfig;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
@@ -17,6 +18,7 @@ import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.noodle.Noodle;
 
+
 import org.mockito.Mockito;
 
 import javax.inject.Singleton;
@@ -24,6 +26,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+
+import static org.mockito.Mockito.*;
 
 @Module
 public class MockNewYouModule {
@@ -81,8 +85,15 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient() {
-        return Mockito.mock(OkHttpClient.class);
+    OkHttpClient provideOkHttpClient(){
+
+        OkHttpClient okHttpClient = mock(OkHttpClient.class);
+        try {
+            when(okHttpClient.newCall(any()).execute()).thenReturn(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return okHttpClient;//Mockito.mock(OkHttpClient.class);
     }
 
     @Provides
