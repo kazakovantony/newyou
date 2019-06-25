@@ -15,6 +15,7 @@ import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
+import com.kazakov.newyou.app.utils.FileUtils;
 import com.kazakov.newyou.app.view.component.NewYouTestComponent;
 
 import org.apache.commons.io.IOUtils;
@@ -69,14 +70,17 @@ public class TestDataViewTest {
     @Test
     public void Given_WorkoutActivityData_When_Received_Then_StoreToDataBase_Do_Predict() throws IOException {
         activityRule.launchActivity(new Intent());
-        String json = readFile();
+        String json = FileUtils.readFile(InstrumentationRegistry.getInstrumentation().getContext(),
+                com.kazakov.newyou.app.test.R.raw.workoutactivity);
         ToggleButton changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
-        changeMode.performClick(); // start workout
+        activityRule.getActivity().runOnUiThread(changeMode::performClick); // start workout
         eventService.triggerEvent(new DataReceiveEvent(json.getBytes())); // emlulate data receiving
         List<SensorsRecord> sensorsRecordList = dataService.extractDataByType(SensorsRecord.class);
         assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size()); // it is redundant, check exists during stop workout
-        changeMode.performClick(); // stop workout
-        bUI
+        activityRule.getActivity().runOnUiThread(changeMode::performClick); // stop workout
+
+        //migrate to sql lite json data type
+
         // prediction logic goes here
         // mock prediction service
         // click stop button
@@ -84,14 +88,5 @@ public class TestDataViewTest {
         // do relearning
         //spring test profile for test configuration
 
-    }
-
-    private String readFile() throws IOException {
-        InputStream is =
-                InstrumentationRegistry.getInstrumentation().getContext().getResources()
-                        .openRawResource(com.kazakov.newyou.app.test.R.raw.workoutactivity);
-        String result = IOUtils.toString(is);
-        IOUtils.closeQuietly(is);
-        return result;
     }
 }

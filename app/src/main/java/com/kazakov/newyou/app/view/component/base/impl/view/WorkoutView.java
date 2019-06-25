@@ -9,12 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.PredictionResult;
 import com.kazakov.newyou.app.model.SensorsRecord;
@@ -23,18 +21,16 @@ import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 public class WorkoutView extends Fragment {
-
-    static final String START = "START";
 
     @Inject
     WorkoutState workoutState;
@@ -46,6 +42,8 @@ public class WorkoutView extends Fragment {
     DataService dataService;
     @Inject
     PredictorService predictorService;
+    @Inject
+    WorkoutService workoutService;
 
     ArrayAdapter<String> workouts;
 
@@ -54,6 +52,7 @@ public class WorkoutView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        App.getComponent(getContext()).inject(this);
         setHasOptionsMenu(true);
 
         currentFrame = (FrameLayout) inflater.inflate(R.layout.fragment_workout, container, false);
@@ -63,11 +62,12 @@ public class WorkoutView extends Fragment {
         toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             try {
                 if (isChecked) {
-                    stopWorkout();
+                    workoutService.stopWorkout();
+                    doPredict();
                 } else {
-                    startWorkout();
+                    workoutService.startWorkout();
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -82,40 +82,6 @@ public class WorkoutView extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return true;
-    }
-
-    public void stopWorkout() throws IOException {
-        if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
-            //  ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
-            workoutState.setActive(false);
-            doPredict();
-        }
-    }
-
-    public void startWorkout() throws InterruptedException {
-        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService); // it should be done during init, not start workout
-        watchConnectionServiceHolder.getWatchConnectionService().findPeers(); // it should be done during init, not start workout
-        if (!watchConnectionServiceHolder.getWatchConnectionService().sendData(START)) {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
-        } else {
-            workoutState.setActive(true);
-            //((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStop);
-        }
-    }
-
-    public void buttonChangeMode(View view) throws IOException, InterruptedException {
-
-        if (workoutState.isBound()) {
-            if (workoutState.isActive()) {
-                stopWorkout();
-            } else {
-                startWorkout();
-            }
-        } else {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
-        }
     }
 
     private void updateTextViewHandle(UpdateViewEvent event) {

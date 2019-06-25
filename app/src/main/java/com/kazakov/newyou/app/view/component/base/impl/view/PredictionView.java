@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.PredictionResult;
 
@@ -24,6 +25,7 @@ public class PredictionView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        App.getComponent(getContext()).inject(this);
         setHasOptionsMenu(true);
         currentFrame = (FrameLayout) inflater.inflate(R.layout.fragment_prediction, container, false);
         renderView(null);

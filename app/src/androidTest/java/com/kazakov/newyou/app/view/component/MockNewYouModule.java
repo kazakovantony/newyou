@@ -2,24 +2,29 @@ package com.kazakov.newyou.app.view.component;
 
 import android.app.Application;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.App;
-import com.kazakov.newyou.app.BuildConfig;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
+import com.kazakov.newyou.app.model.PredictionResult;
 import com.kazakov.newyou.app.model.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
-import com.kazakov.newyou.app.service.WatchConnectionService;
 import com.kazakov.newyou.app.service.WatchConnectionServiceStub;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.event.EventService;
+import com.kazakov.newyou.app.utils.FileUtils;
 import com.noodle.Noodle;
 
-
-import org.mockito.Mockito;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.inject.Singleton;
 
@@ -85,7 +90,7 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(){
+    OkHttpClient provideOkHttpClient() {
 
         OkHttpClient okHttpClient = mock(OkHttpClient.class);
         try {
@@ -98,8 +103,19 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    PredictorService providePredictorService() {
-        return new PredictorService(null, null);
+    PredictorService providePredictorService(Gson gson) {
+        PredictorService predictorService = mock(PredictorService.class);
+        try {
+            String json = FileUtils.readFile(InstrumentationRegistry.getInstrumentation().getContext(),
+                    com.kazakov.newyou.app.test.R.raw.activitypredictionresult);
+            Type listType = new TypeToken<List<PredictionResult>>() {
+            }.getType();
+            List<PredictionResult> predictionResult = gson.fromJson(json, listType);
+            when(predictorService.predict(any())).thenReturn(predictionResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return predictorService;
     }
 
     @Provides
@@ -118,6 +134,21 @@ public class MockNewYouModule {
     @Singleton
     WatchConnectionProvider watchConnectionProvider() {
         return new WatchConnectionProvider(() -> WatchConnectionServiceStub.class);
+    }
+
+    @Provides
+    @Singleton
+    WorkoutService workoutServiceProvider(WatchServiceHolder watchServiceHolder,
+                                          WorkoutState workoutState, EventService eventService
+    ) {
+        WorkoutService workoutService = mock(WorkoutService.class);
+        doNothing().when(workoutService).startWorkout();
+        try {
+            doNothing().when(workoutService).stopWorkout();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workoutService;
     }
 
     public void setApp(App app) {

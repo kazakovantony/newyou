@@ -21,8 +21,8 @@ tools:context="com.kazakov.newyou.app.view.component.base.impl.view.WorkoutView"
         android:checked="true"
         android:drawablePadding="20dp"
         android:textColor="#000"
-        android:textOff="Start"
-        android:textOn="Stop"
+        android:textOff="Stop"
+        android:textOn="Start"
         />
 
     <ListView
