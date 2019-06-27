@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AndroidRoomDatabase</string>
 
-    <string name="app_name">NewYou(C)</string>
-    <string name="hello_world">Hello Accessory!</string>
-    <string name="ConnectionEstablishedMsg">Connection with smart watch has been established.</string>
-    <string name="ConnectionTerminateddMsg">Connection with smart watch has been terminated.</string>
-    <string name="ConnectionAlreadyExist">Connection has already been existed!!!</string>
-    <string name="ConnectionAlreadyDisconnected">Connection has already been disconnected!!!</string>
-    <string name="ConnectionFailure">Connection Failure</string>
-    <string name="NoPeersFound">No peers have been found!!!</string>
-    <string name="buttonConnect">Connect</string>
-    <string name="buttonStop">Stop</string>
-    <string name="watchIsNotReachable">Watch is not reachable</string>
-    <string name="buttonStart">Start</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Add User</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_login">Sign in</string>
 </resources>
