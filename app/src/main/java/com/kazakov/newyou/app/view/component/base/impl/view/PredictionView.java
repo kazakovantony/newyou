@@ -1,6 +1,5 @@
 package com.kazakov.newyou.app.view.component.base.impl.view;
 
-import android.support.design.widget.TabItem;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
-import com.kazakov.newyou.app.model.PredictionResult;
+import com.kazakov.newyou.app.model.json.PredictionResult;
 
 import java.util.List;
 

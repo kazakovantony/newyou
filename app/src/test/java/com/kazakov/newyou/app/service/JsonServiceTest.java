@@ -1,7 +1,7 @@
 package com.kazakov.newyou.app.service;
 
 import com.google.gson.Gson;
-import com.kazakov.newyou.app.model.SensorsRecord;
+import com.kazakov.newyou.app.model.json.SensorsRecord;
 
 import org.junit.Test;
 

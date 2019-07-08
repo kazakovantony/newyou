@@ -4,8 +4,8 @@ import android.os.StrictMode;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.kazakov.newyou.app.model.PredictionResult;
-import com.kazakov.newyou.app.model.SensorsRecord;
+import com.kazakov.newyou.app.model.json.PredictionResult;
+import com.kazakov.newyou.app.model.json.SensorsRecord;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

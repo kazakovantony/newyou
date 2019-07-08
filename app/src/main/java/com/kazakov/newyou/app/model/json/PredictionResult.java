@@ -1,4 +1,4 @@
-package com.kazakov.newyou.app.model;
+package com.kazakov.newyou.app.model.json;
 
 import com.google.gson.annotations.Expose;
 

@@ -14,6 +14,8 @@ public class App extends Application {
     protected NewYouComponent createComponent() {
         NewYouModule module = new NewYouModule();
         module.setApp(this);
+        //DatabaseManager init
+        //student repo
         return DaggerNewYouComponent.builder().newYouModule(module).build();
     }
 

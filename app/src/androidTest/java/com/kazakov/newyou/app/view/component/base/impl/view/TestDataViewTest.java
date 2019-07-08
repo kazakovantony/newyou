@@ -2,14 +2,11 @@ package com.kazakov.newyou.app.view.component.base.impl.view;
 
 import android.app.Instrumentation;
 import android.content.Intent;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.App;
-import com.kazakov.newyou.app.BuildConfig;
 import com.kazakov.newyou.app.R;
-import com.kazakov.newyou.app.model.PredictionResult;
-import com.kazakov.newyou.app.model.SensorsRecord;
+import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
@@ -18,7 +15,6 @@ import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.utils.FileUtils;
 import com.kazakov.newyou.app.view.component.NewYouTestComponent;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,7 +22,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.inject.Inject;

@@ -2,7 +2,6 @@ package com.kazakov.newyou.app.view.component.base.impl.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
@@ -16,14 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kazakov.newyou.app.App;
-import com.kazakov.newyou.app.BuildConfig;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.GymActivity;
-import com.kazakov.newyou.app.model.PredictionResult;
-import com.kazakov.newyou.app.model.SensorsRecord;
+import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.service.DataService;
+import com.kazakov.newyou.app.repository.SensoryRecordRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
@@ -43,7 +40,7 @@ public class TestDataView extends AppCompatActivity {
     ListView listView;
     ArrayAdapter<String> workouts;
     @Inject
-    DataService dataService;
+    SensoryRecordRepo sensoryRecordRepo;
     @Inject
     PredictorService predictorService;
     @Inject
@@ -162,7 +159,7 @@ refactor it to show these steps:
         //messagesView.setSelection(messageAdapter.getCount() - 1);
         List<SensorsRecord> sensorsRecords = jsonService
                 .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage());
-        dataService.storeSensorsData(sensorsRecords);
+        sensoryRecordRepo.create(sensorsRecords);
     }
 
     private String getTextViewText(int id) {

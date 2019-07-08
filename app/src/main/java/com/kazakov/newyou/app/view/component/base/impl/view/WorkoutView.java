@@ -14,11 +14,11 @@ import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
-import com.kazakov.newyou.app.model.PredictionResult;
-import com.kazakov.newyou.app.model.SensorsRecord;
-import com.kazakov.newyou.app.model.Workout;
+import com.kazakov.newyou.app.model.json.PredictionResult;
+import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.service.DataService;
+import com.kazakov.newyou.app.repository.SensoryRecordRepo;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.WorkoutService;
@@ -39,7 +39,7 @@ public class WorkoutView extends Fragment {
     @Inject
     EventService eventService;
     @Inject
-    DataService dataService;
+    SensoryRecordRepo sensoryRecordRepo;
     @Inject
     PredictorService predictorService;
     @Inject
@@ -89,9 +89,9 @@ public class WorkoutView extends Fragment {
     }
 
     private void doPredict() throws IOException {
-        List<SensorsRecord> forPredict = dataService.extractDataByType(SensorsRecord.class);
+        List<SensorsRecord> forPredict = sensoryRecordRepo.findAll();
         List<PredictionResult> predictedGymActivity = predictorService.predict(forPredict);
-        dataService.deleteData(forPredict, SensorsRecord.class);
+        sensoryRecordRepo.delete(forPredict);
         dataService.storeWorkout(Workout.create(predictedGymActivity));
         updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
     }

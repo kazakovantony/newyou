@@ -6,15 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
-import com.kazakov.newyou.app.model.SensorsRecord;
-import com.kazakov.newyou.app.model.Workout;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.service.DataService;
+import com.kazakov.newyou.app.repository.SensoryRecordRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchConnectionService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.noodle.Noodle;
 
@@ -69,14 +68,6 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    Noodle provideNoodle(App app) {
-        return Noodle.with(app.getBaseContext())
-                .addType(SensorsRecord.class)
-                .addType(Workout.class).build();
-    }
-
-    @Provides
-    @Singleton
     Gson provideGson() {
         return new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation().create();
@@ -99,12 +90,6 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    DataService provideDataService(WorkoutState workoutState, Noodle noodle) {
-        return new DataService(noodle);
-    }
-
-    @Provides
-    @Singleton
     JsonService provideJson(WorkoutState workoutState, Noodle noodle) {
         return new JsonService(new Gson());
     }
@@ -113,6 +98,18 @@ public class NewYouModule {
     @Singleton
     WatchConnectionProvider watchConnectionProvider() {
         return new WatchConnectionProvider(() -> WatchConnectionService.class);
+    }
+
+    @Provides
+    @Singleton
+    DatabaseService provideJson(App app) {
+        return new DatabaseService(app);
+    }
+
+    @Provides
+    @Singleton
+    SensoryRecordRepo provideJson(DatabaseService databaseService) {
+        return new SensoryRecordRepo(databaseService);
     }
 
     public void setApp(App app) {

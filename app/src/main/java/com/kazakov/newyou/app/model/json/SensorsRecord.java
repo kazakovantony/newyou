@@ -1,17 +1,11 @@
-package com.kazakov.newyou.app.model;
+package com.kazakov.newyou.app.model.json;
 
 import com.google.gson.annotations.Expose;
-import com.noodle.Id;
 
 import java.util.Objects;
 
 public class SensorsRecord {
 
-    @Id
-    public long id;
-    public String athleteName;
-    public GymActivity gymActivity;
-    public int iterationAmount;
     @Expose
     public long time;
     @Expose
@@ -34,22 +28,18 @@ public class SensorsRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SensorsRecord that = (SensorsRecord) o;
-        return id == that.id &&
-                iterationAmount == that.iterationAmount &&
-                time == that.time &&
+        return time == that.time &&
                 Float.compare(that.x, x) == 0 &&
                 Float.compare(that.y, y) == 0 &&
                 Float.compare(that.z, z) == 0 &&
                 Float.compare(that.magn_z, magn_z) == 0 &&
                 Float.compare(that.ax, ax) == 0 &&
                 Float.compare(that.ay, ay) == 0 &&
-                Float.compare(that.az, az) == 0 &&
-                Objects.equals(athleteName, that.athleteName) &&
-                gymActivity == that.gymActivity;
+                Float.compare(that.az, az) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, athleteName, gymActivity, iterationAmount, time, x, y, z, magn_z, ax, ay, az);
+        return Objects.hash(time, x, y, z, magn_z, ax, ay, az);
     }
 }
