@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.repository.SensoryRecordRepo;
+import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
@@ -108,8 +108,8 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    SensoryRecordRepo provideJson(DatabaseService databaseService) {
-        return new SensoryRecordRepo(databaseService);
+    NewYouRepo provideJson(DatabaseService databaseService) {
+        return new NewYouRepo(databaseService);
     }
 
     public void setApp(App app) {

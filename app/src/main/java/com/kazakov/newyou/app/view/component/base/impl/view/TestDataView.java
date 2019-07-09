@@ -20,11 +20,12 @@ import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.GymActivity;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.repository.SensoryRecordRepo;
+import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.view.component.base.impl.PageAdapter;
@@ -40,7 +41,7 @@ public class TestDataView extends AppCompatActivity {
     ListView listView;
     ArrayAdapter<String> workouts;
     @Inject
-    SensoryRecordRepo sensoryRecordRepo;
+    NewYouRepo newYouRepo;
     @Inject
     PredictorService predictorService;
     @Inject
@@ -53,6 +54,8 @@ public class TestDataView extends AppCompatActivity {
     JsonService jsonService;
     @Inject
     WatchConnectionProvider watchConnectionProvider;
+    @Inject
+    SensorsRecordsBatchConverter converter;
    // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -158,8 +161,8 @@ refactor it to show these steps:
         //runOnUiThread(messageAdapter.addMessageTask(dataReceiveEvent.getMessage()));
         //messagesView.setSelection(messageAdapter.getCount() - 1);
         List<SensorsRecord> sensorsRecords = jsonService
-                .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage());
-        sensoryRecordRepo.create(sensorsRecords);
+                .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage()); // validation?
+        newYouRepo.create(converter.convert(dataReceiveEvent.getMessage()));
     }
 
     private String getTextViewText(int id) {

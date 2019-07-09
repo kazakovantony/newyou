@@ -11,38 +11,38 @@ import java.util.function.Supplier;
 
 import javax.inject.Inject;
 
-public class SensoryRecordRepo {
+public class NewYouRepo {
 
     private DatabaseService databaseService;
 
     @Inject
-    public SensoryRecordRepo(DatabaseService databaseService) {
+    public NewYouRepo(DatabaseService databaseService) {
         this.databaseService = databaseService;
     }
 
-    public int create(SensorsRecord item) {
+    public int create(Object item) {
         int success = -1;
 
         try {
-            success = databaseService.getSensorsRecordDao().create(item);
-            databaseService.getSensorsRecordDao().create(item);
+            success = databaseService.getSpecificDao(item.getClass()).create(item);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return success;
     }
 
-    public int create(List<SensorsRecord> items) {
+    public int create(List<Object> items) {
         int success = -1;
 
         try {
-            success = databaseService.getSensorsRecordDao().callBatchTasks(() -> {
+            Object o = items.stream().findAny().get();
+            success = databaseService.getSpecificDao(o.getClass()).callBatchTasks(() -> {
                 int res = -1;
-                for (SensorsRecord sensorsRecord : items) {
-                    res = create(sensorsRecord);
+                for (Object item : items) {
+                    res = create(item);
                     if (res != 1) {
                         throw new IllegalStateException(
-                                String.format("Cannot create record %s", sensorsRecord));
+                                String.format("Cannot create record %s", item));
                     }
                 }
                 return res;
@@ -53,23 +53,23 @@ public class SensoryRecordRepo {
         return success;
     }
 
-    public int delete(SensorsRecord item) {
+    public int delete(Object item) {
 
         int index = -1;
 
         try {
-            index = databaseService.getSensorsRecordDao().delete(item);
+            index = databaseService.getSpecificDao(item.getClass()).delete(item);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return index;
     }
 
     public int delete(List<SensorsRecord> items) {
         return intResultOperation(() -> {
             try {
-                return databaseService.getSensorsRecordDao().delete(items);
+                Object o = items.stream().findAny().get();
+                return databaseService.getSpecificDao(o.getClass()).delete(items);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -77,22 +77,22 @@ public class SensoryRecordRepo {
         });
     }
 
-    public Optional<SensorsRecord> findById(int id) {
+    public <T> Optional<T> findById(int id, Class clazz) {
 
         try {
-            return Optional.of(databaseService.getSensorsRecordDao().queryForId(id));
+            return Optional.of((T) databaseService.getSpecificDao(clazz).queryForId(id));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return Optional.empty();
     }
 
-    public List<SensorsRecord> findAll() {
+    public <T> List<T> findAll(Class clazz) {
 
-        List<SensorsRecord> items = new ArrayList<>();
+        List<T> items = new ArrayList<>();
 
         try {
-            items = databaseService.getSensorsRecordDao().queryForAll();
+            items = (List<T>) databaseService.getSpecificDao(clazz).queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }

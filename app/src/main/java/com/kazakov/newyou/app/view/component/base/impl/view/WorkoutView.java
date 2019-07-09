@@ -16,9 +16,10 @@ import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.repository.SensoryRecordRepo;
+import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.WorkoutService;
@@ -39,7 +40,7 @@ public class WorkoutView extends Fragment {
     @Inject
     EventService eventService;
     @Inject
-    SensoryRecordRepo sensoryRecordRepo;
+    NewYouRepo newYouRepo;
     @Inject
     PredictorService predictorService;
     @Inject
@@ -89,9 +90,9 @@ public class WorkoutView extends Fragment {
     }
 
     private void doPredict() throws IOException {
-        List<SensorsRecord> forPredict = sensoryRecordRepo.findAll();
+        List<SensorsRecordsBatch> forPredict = newYouRepo.findAll(SensorsRecordsBatch.class); //here should be only not predicted yet
         List<PredictionResult> predictedGymActivity = predictorService.predict(forPredict);
-        sensoryRecordRepo.delete(forPredict);
+        newYouRepo.delete(forPredict);
         dataService.storeWorkout(Workout.create(predictedGymActivity));
         updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
     }
