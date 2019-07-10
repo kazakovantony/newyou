@@ -3,10 +3,13 @@ package com.kazakov.newyou.app.model.table;
 import com.j256.ormlite.field.DatabaseField;
 import com.kazakov.newyou.app.model.GymActivity;
 
-public class Exercise {
+public abstract class Exercise {
 
     @DatabaseField(generatedId = true)
     protected int id;
+
+    @DatabaseField (foreign = true, columnName = "workout", canBeNull = false)
+    protected Workout workout;
 
     @DatabaseField(columnName = "type")
     protected GymActivity type;
@@ -14,8 +17,11 @@ public class Exercise {
     @DatabaseField(columnName = "iteration_amount")
     protected int iterationAmount;
 
-    @DatabaseField(canBeNull = false, foreign = true)
-    private SensorsRecordsBatch sensorsRecordsBatch;
+    @DatabaseField(canBeNull = false, foreign = true, columnName = "sensors_records_batch")
+    protected SensorsRecordsBatch sensorsRecordsBatch;
+
+    @DatabaseField(columnName = "duration")
+    protected String duration;
 
     public SensorsRecordsBatch getSensorsRecordsBatch() {
         return sensorsRecordsBatch;
@@ -47,5 +53,21 @@ public class Exercise {
 
     public void setIterationAmount(int iterationAmount) {
         this.iterationAmount = iterationAmount;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
     }
 }

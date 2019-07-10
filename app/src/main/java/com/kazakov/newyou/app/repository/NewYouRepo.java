@@ -100,6 +100,17 @@ public class NewYouRepo {
         return items;
     }
 
+    public int refresh(Object item) {
+        int success = -1;
+
+        try {
+            success = databaseService.getSpecificDao(item.getClass()).refresh(item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
     private int intResultOperation(Supplier<Integer> operation){
         int index;
         index = operation.get();

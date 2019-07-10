@@ -15,14 +15,15 @@ import android.widget.ToggleButton;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.json.PredictionResult;
-import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.Exercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
-import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.WorkoutService;
+import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
 
@@ -45,6 +46,8 @@ public class WorkoutView extends Fragment {
     PredictorService predictorService;
     @Inject
     WorkoutService workoutService;
+    @Inject
+    SensorsRecordsBatchConverter converter;
 
     ArrayAdapter<String> workouts;
 
@@ -91,9 +94,14 @@ public class WorkoutView extends Fragment {
 
     private void doPredict() throws IOException {
         List<SensorsRecordsBatch> forPredict = newYouRepo.findAll(SensorsRecordsBatch.class); //here should be only not predicted yet
-        List<PredictionResult> predictedGymActivity = predictorService.predict(forPredict);
+        List<PredictionResult> predictedGymActivity = predictorService
+                .predict(converter.convertToRecords(forPredict));
         newYouRepo.delete(forPredict);
-        dataService.storeWorkout(Workout.create(predictedGymActivity));
+        Workout workout = converter.createWorkout();
+        newYouRepo.create(workout);
+        newYouRepo.refresh(workout);
+        List<Exercise> exercises = converter.createExercises(workout, predictedGymActivity, forPredict);
+        newYouRepo.create(exercises);
         updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
     }
 }

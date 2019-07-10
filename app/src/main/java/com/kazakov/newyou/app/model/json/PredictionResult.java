@@ -1,21 +1,16 @@
 package com.kazakov.newyou.app.model.json;
 
 import com.google.gson.annotations.Expose;
+import com.kazakov.newyou.app.model.GymActivity;
 
 public class PredictionResult {
 
     @Expose
-    String activity;
+    public GymActivity activity;
     @Expose
-    String duration;
+    public String duration;
     @Expose
-    int number_of_repeats;
-
-    public PredictionResult(String activity, String duration, int number_of_repeats) {
-        this.activity = activity;
-        this.duration = duration;
-        this.number_of_repeats = number_of_repeats;
-    }
+    public int number_of_repeats;
 
     @Override
     public String toString() {

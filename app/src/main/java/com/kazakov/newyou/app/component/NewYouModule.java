@@ -7,12 +7,14 @@ import com.google.gson.GsonBuilder;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchConnectionService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.noodle.Noodle;
@@ -110,6 +112,12 @@ public class NewYouModule {
     @Singleton
     NewYouRepo provideJson(DatabaseService databaseService) {
         return new NewYouRepo(databaseService);
+    }
+
+    @Provides
+    @Singleton
+    SensorsRecordsBatchConverter provideSensorsRecordsBatchConverter(JsonService jsonService) {
+        return new SensorsRecordsBatchConverter(jsonService);
     }
 
     public void setApp(App app) {
