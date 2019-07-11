@@ -17,6 +17,8 @@ import com.kazakov.newyou.app.model.table.Workout;
 import java.sql.SQLException;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class DatabaseService extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "NewYou.db";
@@ -24,6 +26,7 @@ public class DatabaseService extends OrmLiteSqliteOpenHelper {
 
     private Map<Class, Dao<Object, Integer>> cachedDaos;
 
+    @Inject
     public DatabaseService(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

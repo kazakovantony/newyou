@@ -17,7 +17,6 @@ import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
-import com.noodle.Noodle;
 
 import javax.inject.Singleton;
 
@@ -92,7 +91,7 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    JsonService provideJson(WorkoutState workoutState, Noodle noodle) {
+    JsonService provideJson() {
         return new JsonService(new Gson());
     }
 
@@ -104,13 +103,13 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    DatabaseService provideJson(App app) {
+    DatabaseService provideDatabase(Application app) {
         return new DatabaseService(app);
     }
 
     @Provides
     @Singleton
-    NewYouRepo provideJson(DatabaseService databaseService) {
+    NewYouRepo provideRepo(DatabaseService databaseService) {
         return new NewYouRepo(databaseService);
     }
 

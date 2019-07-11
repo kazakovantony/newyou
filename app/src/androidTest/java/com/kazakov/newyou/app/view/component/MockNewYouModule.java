@@ -11,16 +11,17 @@ import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.service.DataService;
+import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchConnectionServiceStub;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.WorkoutService;
+import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
+import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.utils.FileUtils;
-import com.noodle.Noodle;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -77,13 +78,6 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    Noodle provideNoodle() {
-        return Noodle.with(app.getBaseContext())
-                .addType(SensorsRecord.class).build();
-    }
-
-    @Provides
-    @Singleton
     Gson provideGson() {
         return new Gson();
     }
@@ -120,12 +114,6 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    DataService provideDataService(Noodle noodle) {
-        return new DataService(noodle);
-    }
-
-    @Provides
-    @Singleton
     JsonService provideJson() {
         return new JsonService(new Gson());
     }
@@ -149,6 +137,24 @@ public class MockNewYouModule {
             e.printStackTrace();
         }
         return workoutService;
+    }
+
+    @Provides
+    @Singleton
+    DatabaseService provideDatabase(Application app) {
+        return new DatabaseService(app);
+    }
+
+    @Provides
+    @Singleton
+    NewYouRepo provideRepo(DatabaseService databaseService) {
+        return new NewYouRepo(databaseService);
+    }
+
+    @Provides
+    @Singleton
+    SensorsRecordsBatchConverter provideSensorsRecordsBatchConverter(JsonService jsonService) {
+        return new SensorsRecordsBatchConverter(jsonService);
     }
 
     public void setApp(App app) {

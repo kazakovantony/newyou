@@ -4,7 +4,6 @@ import android.widget.ListView;
 
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.WorkoutState;
-import com.kazakov.newyou.app.service.DataService;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
@@ -27,8 +26,6 @@ public class TestDataViewUnitTest {
     ListView messagesView;
     @Mock
     MessageAdapter messageAdapter;
-    @Mock
-    DataService dataService;
     @Mock
     PredictorService predictorService;
     @Mock
