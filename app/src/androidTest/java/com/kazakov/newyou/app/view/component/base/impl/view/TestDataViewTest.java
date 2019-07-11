@@ -7,7 +7,8 @@ import android.widget.ToggleButton;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
-import com.kazakov.newyou.app.service.DataService;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.event.EventService;
@@ -23,6 +24,8 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -39,7 +42,7 @@ public class TestDataViewTest {
     @Inject
     EventService eventService;
     @Inject
-    DataService dataService;
+    NewYouRepo newYouRepo;
     @Inject
     JsonService jsonService;
     @Inject
@@ -59,7 +62,8 @@ public class TestDataViewTest {
 
     @After
     public void cleanUp() {
-        dataService.deleteCollection(SensorsRecord.class);
+        List<SensorsRecordsBatch> records = newYouRepo.findAll(SensorsRecordsBatch.class);
+        newYouRepo.delete(records);
     }
 
     @Test
@@ -70,8 +74,10 @@ public class TestDataViewTest {
         ToggleButton changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
         activityRule.getActivity().runOnUiThread(changeMode::performClick); // start workout
         eventService.triggerEvent(new DataReceiveEvent(json.getBytes())); // emlulate data receiving
-        List<SensorsRecord> sensorsRecordList = dataService.extractDataByType(SensorsRecord.class);
-        assertEquals(sensorsRecordList.size(), jsonService.deserializeJsonArray(SensorsRecord[].class, json).size()); // it is redundant, check exists during stop workout
+        List<SensorsRecordsBatch> recordsBatches = newYouRepo.findAll(SensorsRecordsBatch.class);
+        List<SensorsRecord> batches = recordsBatches.stream().map(i -> deserialize(i.getSensorsRecords())).flatMap(List::stream)
+                .collect(Collectors.toList());
+        assertEquals(batches, jsonService.deserializeJsonArray(SensorsRecord[].class, json)); // it is redundant, check exists during stop workout
         activityRule.getActivity().runOnUiThread(changeMode::performClick); // stop workout
 
         //migrate to sql lite json data type
@@ -83,5 +89,9 @@ public class TestDataViewTest {
         // do relearning
         //spring test profile for test configuration
 
+    }
+
+    private List<SensorsRecord> deserialize(String json) {
+        return jsonService.deserializeJsonArray(SensorsRecord[].class, json);
     }
 }
