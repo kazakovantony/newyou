@@ -2,9 +2,9 @@ package com.kazakov.newyou.app.service.converter;
 
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
-import com.kazakov.newyou.app.model.table.Exercise;
 import com.kazakov.newyou.app.model.table.PredictedExercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatchPredictedExercise;
 import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.service.JsonService;
 
@@ -40,20 +40,36 @@ public class SensorsRecordsBatchConverter {
         return new Workout();
     }
 
-    public List<Exercise> createExercises(Workout workout, List<PredictionResult> predictedGymActivity,
-                                          List<SensorsRecordsBatch> sensorsRecordsBatch) {
-        return predictedGymActivity.stream().map(p -> createExercise(p, workout, sensorsRecordsBatch))
+    public List<PredictedExercise> createPredictedExercises(Workout workout, List<PredictionResult> predictedGymActivity) {
+        return predictedGymActivity.stream().map(p -> createExercise(p, workout))
                 .collect(Collectors.toList());
     }
 
-    private PredictedExercise createExercise(PredictionResult predictionResult, Workout workout,
-                                             List<SensorsRecordsBatch> sensorsRecordsBatch) {
+    private PredictedExercise createExercise(PredictionResult predictionResult, Workout workout) {
         PredictedExercise predictedExercise = new PredictedExercise();
         predictedExercise.setIterationAmount(predictionResult.number_of_repeats);
         predictedExercise.setType(predictionResult.activity);
         predictedExercise.setDuration(predictionResult.duration);
         predictedExercise.setWorkout(workout);
-        predictedExercise.setSensorsRecordsBatch(sensorsRecordsBatch);
         return predictedExercise;
+    }
+
+    public List<SensorsRecordsBatchPredictedExercise> createSensorsRecordsBatchPredictedExercises(List<PredictedExercise> exercises,
+                                                                                                  List<SensorsRecordsBatch> forPredict) {
+        return exercises.stream()
+                .map(exercise -> createSensorsRecordsBatchPredictedExercises(exercise, forPredict))
+                .flatMap(List::stream).collect(Collectors.toList());
+    }
+
+    private List<SensorsRecordsBatchPredictedExercise> createSensorsRecordsBatchPredictedExercises(PredictedExercise predictedExercise,
+                                                                                                   List<SensorsRecordsBatch> forPredict) {
+        return forPredict.stream().map(batch -> createSensorsRecordsBatchPredictedExercise(batch, predictedExercise)).collect(Collectors.toList());
+    }
+
+    private SensorsRecordsBatchPredictedExercise createSensorsRecordsBatchPredictedExercise(SensorsRecordsBatch batch, PredictedExercise predictedExercise) {
+        SensorsRecordsBatchPredictedExercise sensorsRecordsBatchPredictedExercise = new SensorsRecordsBatchPredictedExercise();
+        sensorsRecordsBatchPredictedExercise.setExercise(predictedExercise);
+        sensorsRecordsBatchPredictedExercise.setSensorsRecordsBatch(batch);
+        return sensorsRecordsBatchPredictedExercise;
     }
 }

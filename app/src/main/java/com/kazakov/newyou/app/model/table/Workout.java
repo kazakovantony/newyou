@@ -10,7 +10,10 @@ public class Workout {
     private long id;
 
     @ForeignCollectionField(eager = false)
-    private ForeignCollection<Exercise> exercises;
+    private ForeignCollection<PredictedExercise> predictedExercises;
+
+    @ForeignCollectionField(eager = false)
+    private ForeignCollection<ActualExercise> actualExercises;
 
     public long getId() {
         return id;
@@ -20,11 +23,19 @@ public class Workout {
         this.id = id;
     }
 
-    public ForeignCollection<Exercise> getExercises() {
-        return exercises;
+    public ForeignCollection<PredictedExercise> getPredictedExercises() {
+        return predictedExercises;
     }
 
-    public void setExercises(ForeignCollection<Exercise> exercises) {
-        this.exercises = exercises;
+    public void setPredictedExercises(ForeignCollection<PredictedExercise> predictedExercises) {
+        this.predictedExercises = predictedExercises;
+    }
+
+    public ForeignCollection<ActualExercise> getActualExercises() {
+        return actualExercises;
+    }
+
+    public void setActualExercises(ForeignCollection<ActualExercise> actualExercises) {
+        this.actualExercises = actualExercises;
     }
 }

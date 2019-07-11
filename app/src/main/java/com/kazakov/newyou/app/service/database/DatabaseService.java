@@ -10,6 +10,8 @@ import com.j256.ormlite.table.TableUtils;
 import com.kazakov.newyou.app.model.table.ActualExercise;
 import com.kazakov.newyou.app.model.table.PredictedExercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatchActualExercise;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatchPredictedExercise;
 import com.kazakov.newyou.app.model.table.Workout;
 
 import java.sql.SQLException;
@@ -33,6 +35,8 @@ public class DatabaseService extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, PredictedExercise.class);
             TableUtils.createTable(connectionSource, ActualExercise.class);
             TableUtils.createTable(connectionSource, Workout.class);
+            TableUtils.createTable(connectionSource, SensorsRecordsBatchActualExercise.class);
+            TableUtils.createTable(connectionSource, SensorsRecordsBatchPredictedExercise.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -45,7 +49,8 @@ public class DatabaseService extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, PredictedExercise.class, true);
             TableUtils.dropTable(connectionSource, ActualExercise.class, true);
             TableUtils.dropTable(connectionSource, PredictedExercise.class, true);
-            TableUtils.createTable(connectionSource, Workout.class);
+            TableUtils.dropTable(connectionSource, SensorsRecordsBatchActualExercise.class, true);
+            TableUtils.dropTable(connectionSource, SensorsRecordsBatchPredictedExercise.class, true);
         } catch (SQLException e) {
             e.printStackTrace();
         }

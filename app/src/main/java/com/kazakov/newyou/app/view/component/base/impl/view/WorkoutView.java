@@ -16,8 +16,10 @@ import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.table.Exercise;
+import com.kazakov.newyou.app.model.table.PredictedExercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatchPredictedExercise;
 import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.PredictorService;
@@ -100,8 +102,10 @@ public class WorkoutView extends Fragment {
         Workout workout = converter.createWorkout();
         newYouRepo.create(workout);
         newYouRepo.refresh(workout);
-        List<Exercise> exercises = converter.createExercises(workout, predictedGymActivity, forPredict);
+        List<PredictedExercise> exercises = converter.createPredictedExercises(workout, predictedGymActivity);
         newYouRepo.create(exercises);
+        List<SensorsRecordsBatchPredictedExercise> predictedExercises = converter.createSensorsRecordsBatchPredictedExercises(exercises, forPredict);
+        newYouRepo.create(predictedExercises);
         updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
     }
 }
