@@ -2,8 +2,9 @@ package com.kazakov.newyou.app.model.table;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.kazakov.newyou.app.model.GymActivity;
+import com.kazakov.newyou.app.model.table.base.Entity;
 
-public abstract class Exercise {
+public abstract class Exercise implements Entity {
 
     @DatabaseField(generatedId = true)
     protected int id;

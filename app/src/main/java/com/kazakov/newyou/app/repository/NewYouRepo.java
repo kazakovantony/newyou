@@ -1,6 +1,7 @@
 package com.kazakov.newyou.app.repository;
 
-import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.model.table.base.Entity;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -20,7 +22,7 @@ public class NewYouRepo {
         this.databaseService = databaseService;
     }
 
-    public int create(Object item) {
+    public <T extends Entity> int create(T item) {
         int success = -1;
 
         try {
@@ -31,14 +33,14 @@ public class NewYouRepo {
         return success;
     }
 
-    public int create(List<Object> items) {
+    public <T extends Entity> int create(List<T> items) {
         int success = -1;
 
         try {
-            Object o = items.stream().findAny().get();
+            Entity o = items.stream().findAny().get();
             success = databaseService.getSpecificDao(o.getClass()).callBatchTasks(() -> {
                 int res = -1;
-                for (Object item : items) {
+                for (Entity item : items) {
                     res = create(item);
                     if (res != 1) {
                         throw new IllegalStateException(
@@ -53,7 +55,7 @@ public class NewYouRepo {
         return success;
     }
 
-    public int delete(Object item) {
+    public <T extends Entity> int delete(T item) {
 
         int index = -1;
 
@@ -65,11 +67,12 @@ public class NewYouRepo {
         return index;
     }
 
-    public int delete(List<SensorsRecord> items) {
+    public <T extends Entity> int delete(List<T> items) {
         return intResultOperation(() -> {
             try {
-                Object o = items.stream().findAny().get();
-                return databaseService.getSpecificDao(o.getClass()).delete(items);
+                Entity e = items.stream().findAny().get();
+                return databaseService.getSpecificDao(e.getClass())
+                        .deleteIds(items.stream().map(Entity::getId).collect(Collectors.toList()));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -100,7 +103,7 @@ public class NewYouRepo {
         return items;
     }
 
-    public int refresh(Object item) {
+    public <T extends Entity> int refresh(T item) {
         int success = -1;
 
         try {

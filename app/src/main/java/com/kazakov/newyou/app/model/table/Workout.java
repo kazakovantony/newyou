@@ -3,11 +3,12 @@ package com.kazakov.newyou.app.model.table;
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
+import com.kazakov.newyou.app.model.table.base.Entity;
 
-public class Workout {
+public class Workout implements Entity {
 
     @DatabaseField(generatedId = true)
-    private long id;
+    private int id;
 
     @ForeignCollectionField(eager = false)
     private ForeignCollection<PredictedExercise> predictedExercises;
@@ -15,11 +16,11 @@ public class Workout {
     @ForeignCollectionField(eager = false)
     private ForeignCollection<ActualExercise> actualExercises;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

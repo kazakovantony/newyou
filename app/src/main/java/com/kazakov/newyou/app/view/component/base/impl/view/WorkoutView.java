@@ -15,7 +15,6 @@ import android.widget.ToggleButton;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.json.PredictionResult;
-import com.kazakov.newyou.app.model.table.Exercise;
 import com.kazakov.newyou.app.model.table.PredictedExercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.model.WorkoutState;

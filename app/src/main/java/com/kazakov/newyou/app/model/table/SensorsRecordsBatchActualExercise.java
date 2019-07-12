@@ -2,9 +2,10 @@ package com.kazakov.newyou.app.model.table;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.kazakov.newyou.app.model.table.base.Entity;
 
 @DatabaseTable(tableName = "sensors_records_batch_actual_exercise")
-public class SensorsRecordsBatchActualExercise {
+public class SensorsRecordsBatchActualExercise implements Entity {
 
     @DatabaseField(generatedId = true)
     protected int id;

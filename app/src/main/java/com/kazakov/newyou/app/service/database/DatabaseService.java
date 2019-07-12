@@ -16,6 +16,7 @@ import com.kazakov.newyou.app.model.table.Workout;
 
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ public class DatabaseService extends OrmLiteSqliteOpenHelper {
     @Inject
     public DatabaseService(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        cachedDaos = new ConcurrentHashMap<>();
     }
 
     @Override

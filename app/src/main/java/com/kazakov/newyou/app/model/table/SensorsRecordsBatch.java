@@ -2,12 +2,13 @@ package com.kazakov.newyou.app.model.table;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.kazakov.newyou.app.model.table.base.Entity;
 
 @DatabaseTable(tableName = "sensors_records_batch")
-public class SensorsRecordsBatch {
+public class SensorsRecordsBatch implements Entity {
 
     @DatabaseField(generatedId = true)
-    private long id;
+    private int id;
 
     @DatabaseField(columnName = "athlete_name")
     private String athleteName;
@@ -15,11 +16,11 @@ public class SensorsRecordsBatch {
     @DatabaseField(columnName = "sensors_records")
     private String sensorsRecords;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
