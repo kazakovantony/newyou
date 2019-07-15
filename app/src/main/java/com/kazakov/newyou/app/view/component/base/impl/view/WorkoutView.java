@@ -105,6 +105,6 @@ public class WorkoutView extends Fragment {
         newYouRepo.create(exercises);
         List<SensorsRecordsBatchPredictedExercise> predictedExercises = converter.createSensorsRecordsBatchPredictedExercises(exercises, forPredict);
         newYouRepo.create(predictedExercises);
-        updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
+//        updateTextViewHandle(new UpdateViewEvent(predictedGymActivity.toString()));// should extract all workouts from db
     }
 }

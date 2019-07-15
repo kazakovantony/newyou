@@ -6,6 +6,7 @@ import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
+import com.kazakov.newyou.app.component.NewYouModule;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.repository.NewYouRepo;
@@ -62,25 +63,28 @@ public class TestDataViewTest {
     @After
     public void cleanUp() {
         List<SensorsRecordsBatch> records = newYouRepo.findAll(SensorsRecordsBatch.class);
-        newYouRepo.delete(records);
+        if (!records.isEmpty()) {
+            newYouRepo.delete(records);
+        }
     }
 
     @Test
-    public void Given_WorkoutActivityData_When_Received_Then_StoreToDataBase_Do_Predict() throws IOException {
+    public void Given_WorkoutActivityData_When_Received_Then_StoreToDataBase_Do_Predict() throws IOException{
         activityRule.launchActivity(new Intent());
         String json = FileUtils.readFile(InstrumentationRegistry.getInstrumentation().getContext(),
                 com.kazakov.newyou.app.test.R.raw.workoutactivity);
         ToggleButton changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
-        activityRule.getActivity().runOnUiThread(changeMode::performClick); // start workout
-        eventService.triggerEvent(new DataReceiveEvent(json.getBytes())); // emlulate data receiving
+        activityRule.getActivity().runOnUiThread(changeMode::performClick);
+        eventService.triggerEvent(new DataReceiveEvent(json.getBytes()));
         List<SensorsRecordsBatch> recordsBatches = newYouRepo.findAll(SensorsRecordsBatch.class);
-        List<SensorsRecord> batches = recordsBatches.stream().map(i -> deserialize(i.getSensorsRecords())).flatMap(List::stream)
+        List<SensorsRecord> batches = recordsBatches.stream()
+                .map(i -> deserialize(i.getSensorsRecords())).flatMap(List::stream)
                 .collect(Collectors.toList());
-        assertEquals(batches, jsonService.deserializeJsonArray(SensorsRecord[].class, json)); // it is redundant, check exists during stop workout
-        activityRule.getActivity().runOnUiThread(changeMode::performClick); // stop workout
+        assertEquals(batches, jsonService.deserializeJsonArray(SensorsRecord[].class, json));
+        activityRule.getActivity().runOnUiThread(changeMode::performClick);
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
-        //migrate to sql lite json data type
-
+        //use in memory database for testing
         // prediction logic goes here
         // mock prediction service
         // click stop button
