@@ -33,6 +33,12 @@ public class DatabaseService extends OrmLiteSqliteOpenHelper {
         cachedDaos = new ConcurrentHashMap<>();
     }
 
+    @Inject
+    public DatabaseService(Context context, String suffix) {
+        super(context, DATABASE_NAME + suffix, null, DATABASE_VERSION);
+        cachedDaos = new ConcurrentHashMap<>();
+    }
+
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
