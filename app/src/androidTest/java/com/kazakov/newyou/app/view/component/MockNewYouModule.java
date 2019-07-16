@@ -139,9 +139,13 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    DatabaseService provideDatabase(Application app) throws IOException {
-        FileUtils.copy(InstrumentationRegistry.getInstrumentation().getTargetContext()
-                .getDatabasePath(DatabaseService.DATABASE_NAME), TestConstant.TEST_DB_SUFFIX.getValue());
+    DatabaseService provideDatabase(Application app){
+        try {
+            FileUtils.copy(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                    .getDatabasePath(DatabaseService.DATABASE_NAME), TestConstant.TEST_DB_SUFFIX.getValue());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new DatabaseService(app, TestConstant.TEST_DB_SUFFIX.getValue());
     }
 

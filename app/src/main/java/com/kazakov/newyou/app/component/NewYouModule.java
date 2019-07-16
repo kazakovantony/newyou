@@ -103,7 +103,7 @@ public class NewYouModule {
     @Provides
     @Singleton
     DatabaseService provideDatabase(Application app) {
-        return new DatabaseService(app);
+        return new DatabaseService(app, "");
     }
 
     @Provides

@@ -28,12 +28,6 @@ public class DatabaseService extends OrmLiteSqliteOpenHelper {
     private Map<Class, Dao<Object, Integer>> cachedDaos;
 
     @Inject
-    public DatabaseService(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        cachedDaos = new ConcurrentHashMap<>();
-    }
-
-    @Inject
     public DatabaseService(Context context, String suffix) {
         super(context, DATABASE_NAME + suffix, null, DATABASE_VERSION);
         cachedDaos = new ConcurrentHashMap<>();
