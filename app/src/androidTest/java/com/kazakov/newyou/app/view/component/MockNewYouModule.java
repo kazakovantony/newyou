@@ -7,9 +7,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.App;
+import com.kazakov.newyou.app.constants.TestConstant;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.json.PredictionResult;
-import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
@@ -92,7 +92,7 @@ public class MockNewYouModule {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return okHttpClient;//Mockito.mock(OkHttpClient.class);
+        return okHttpClient;
     }
 
     @Provides
@@ -126,9 +126,7 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    WorkoutService workoutServiceProvider(WatchServiceHolder watchServiceHolder,
-                                          WorkoutState workoutState, EventService eventService
-    ) {
+    WorkoutService workoutServiceProvider() {
         WorkoutService workoutService = mock(WorkoutService.class);
         doNothing().when(workoutService).startWorkout();
         try {
@@ -141,8 +139,10 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    DatabaseService provideDatabase(Application app) {
-        return new DatabaseService(app);
+    DatabaseService provideDatabase(Application app) throws IOException {
+        FileUtils.copy(InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getDatabasePath(DatabaseService.DATABASE_NAME), TestConstant.TEST_DB_SUFFIX.getValue());
+        return new DatabaseService(app, TestConstant.TEST_DB_SUFFIX.getValue());
     }
 
     @Provides

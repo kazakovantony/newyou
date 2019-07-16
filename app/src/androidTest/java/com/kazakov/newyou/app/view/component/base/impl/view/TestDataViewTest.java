@@ -6,7 +6,6 @@ import android.widget.ToggleButton;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
-import com.kazakov.newyou.app.component.NewYouModule;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.repository.NewYouRepo;
@@ -56,7 +55,7 @@ public class TestDataViewTest {
     public void setUp() {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         NewYouTestComponent component = (NewYouTestComponent) App
-               .getComponent(instrumentation.getTargetContext().getApplicationContext());
+                .getComponent(instrumentation.getTargetContext().getApplicationContext());
         component.inject(this);
     }
 

@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 public class DatabaseService extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "NewYou.db";
+    public static final String DATABASE_NAME = "NewYou.db";
     private static final int DATABASE_VERSION = 1;
 
     private Map<Class, Dao<Object, Integer>> cachedDaos;
