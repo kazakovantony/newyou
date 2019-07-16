@@ -83,7 +83,6 @@ public class TestDataViewTest {
         activityRule.getActivity().runOnUiThread(changeMode::performClick);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
-        //use in memory database for testing
         // prediction logic goes here
         // mock prediction service
         // click stop button
