@@ -18,19 +18,8 @@ public abstract class Exercise implements Entity {
     @DatabaseField(columnName = "iteration_amount")
     protected int iterationAmount;
 
-    @DatabaseField(canBeNull = false, foreign = true, columnName = "sensors_records_batch")
-    protected SensorsRecordsBatch sensorsRecordsBatch;
-
     @DatabaseField(columnName = "duration")
     protected String duration;
-
-    public SensorsRecordsBatch getSensorsRecordsBatch() {
-        return sensorsRecordsBatch;
-    }
-
-    public void setSensorsRecordsBatch(SensorsRecordsBatch sensorsRecordsBatch) {
-        this.sensorsRecordsBatch = sensorsRecordsBatch;
-    }
 
     public int getId() {
         return id;

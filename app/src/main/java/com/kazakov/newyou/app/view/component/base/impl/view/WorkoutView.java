@@ -97,7 +97,6 @@ public class WorkoutView extends Fragment {
         List<SensorsRecordsBatch> forPredict = newYouRepo.findAll(SensorsRecordsBatch.class); //here should be only not predicted yet
         List<PredictionResult> predictedGymActivity = predictorService
                 .predict(converter.convertToRecords(forPredict));
-        newYouRepo.delete(forPredict);
         Workout workout = converter.createWorkout();
         newYouRepo.create(workout);
         newYouRepo.refresh(workout);
