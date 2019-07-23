@@ -23,6 +23,9 @@ import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.utils.FileUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -37,6 +40,8 @@ import static org.mockito.Mockito.*;
 
 @Module
 public class MockNewYouModule {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MockNewYouModule.class);
 
     App app;
 
@@ -90,7 +95,7 @@ public class MockNewYouModule {
         try {
             when(okHttpClient.newCall(any()).execute()).thenReturn(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return okHttpClient;
     }
@@ -107,7 +112,7 @@ public class MockNewYouModule {
             List<PredictionResult> predictionResult = gson.fromJson(json, listType);
             when(predictorService.predict(any())).thenReturn(predictionResult);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return predictorService;
     }
@@ -132,7 +137,7 @@ public class MockNewYouModule {
         try {
             doNothing().when(workoutService).stopWorkout();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return workoutService;
     }
@@ -144,7 +149,7 @@ public class MockNewYouModule {
             FileUtils.copy(InstrumentationRegistry.getInstrumentation().getTargetContext()
                     .getDatabasePath(DatabaseService.DATABASE_NAME), TestConstant.TEST_DB_SUFFIX.getValue());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return new DatabaseService(app, TestConstant.TEST_DB_SUFFIX.getValue());
     }
