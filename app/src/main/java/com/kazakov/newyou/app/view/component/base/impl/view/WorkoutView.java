@@ -78,7 +78,7 @@ public class WorkoutView extends Fragment {
                     workoutService.startWorkout();
                 }
             } catch (IOException e) {
-                LOGGER.debug(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
         });
 
