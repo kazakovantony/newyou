@@ -1,0 +1,18 @@
+<configuration>
+    <property name="LOG_DIR" value="/data/data/com.kazakov.newyou.app/files" />
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/log</file>
+        <append>true</append>
+        <tagEncoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </tagEncoder>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
