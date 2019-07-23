@@ -39,6 +39,8 @@ import javax.inject.Inject;
 
 public class TestDataView extends AppCompatActivity {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestDataView.class);
+
     @Inject
     EventService eventService;
     ListView listView;
@@ -99,10 +101,6 @@ refactor it to show these steps:
         initWorkoutsView();
         serviceConnectionListener.setWatchServiceHolder(watchConnectionServiceHolder);
         bindHandlersOnEvents();
-
-        Logger logger = LoggerFactory.getLogger(TestDataView.class);
-        logger.debug("hello log");
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -168,6 +166,7 @@ refactor it to show these steps:
         //messagesView.setSelection(messageAdapter.getCount() - 1);
         List<SensorsRecord> sensorsRecords = jsonService
                 .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage()); // validation?
+        LOGGER.debug("Data items received: {}", sensorsRecords.size());
         newYouRepo.create(converter.convert(dataReceiveEvent.getMessage()));
     }
 
