@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -20,6 +23,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PredictorService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PredictorService.class);
 
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     static final String PREDICT_URL = "http://109.86.165.173:5000/prediction/movings";
@@ -41,6 +46,7 @@ public class PredictorService {
 
         Request request = createRequest(strJson);
         Response response = httpClient.newCall(request).execute();
+        LOGGER.debug("Prediction response status: {}", response.code());
 
         String res = response.body().string();
         return desirializePredictionResults(res);

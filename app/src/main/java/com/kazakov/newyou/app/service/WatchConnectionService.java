@@ -15,10 +15,14 @@ import com.samsung.android.sdk.accessory.SAAgent;
 import com.samsung.android.sdk.accessory.SAPeerAgent;
 import com.samsung.android.sdk.accessory.SASocket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 public class WatchConnectionService extends SAAgent {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PredictorService.class);
     private static final String TAG = "NewYou";
 
     SocketListener socketListener;
@@ -45,8 +49,8 @@ public class WatchConnectionService extends SAAgent {
         SA mAccessory = new SA();
         try {
             mAccessory.initialize(this);
-        } catch (Exception e1) {
-            e1.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.debug(e.getMessage(), e);
             /*
              * Your application can not use Samsung Accessory SDK. Your application should work smoothly
              * without using this SDK, or you may want to notify user and close your application gracefully
@@ -66,6 +70,7 @@ public class WatchConnectionService extends SAAgent {
         try {
             socketListener.send(getServiceChannelId(0), data.getBytes());
         } catch (IOException e) {
+            LOGGER.debug(e.getMessage(), e);
             result = false;
         }
         return result;
@@ -113,6 +118,7 @@ public class WatchConnectionService extends SAAgent {
 
     @Override
     protected void onError(SAPeerAgent peerAgent, String errorMessage, int errorCode) {
+        LOGGER.debug(errorMessage, errorCode);
         super.onError(peerAgent, errorMessage, errorCode);
     }
 

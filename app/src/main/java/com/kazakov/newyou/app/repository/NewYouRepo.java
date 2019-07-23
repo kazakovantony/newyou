@@ -1,8 +1,10 @@
 package com.kazakov.newyou.app.repository;
 
-import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.model.table.base.Entity;
 import com.kazakov.newyou.app.service.database.DatabaseService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class NewYouRepo {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NewYouRepo.class);
 
     private DatabaseService databaseService;
 
@@ -28,7 +32,7 @@ public class NewYouRepo {
         try {
             success = databaseService.getSpecificDao(item.getClass()).create(item);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return success;
     }
@@ -50,7 +54,7 @@ public class NewYouRepo {
                 return res;
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return success;
     }
@@ -62,7 +66,7 @@ public class NewYouRepo {
         try {
             index = databaseService.getSpecificDao(item.getClass()).delete(item);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return index;
     }
@@ -74,7 +78,7 @@ public class NewYouRepo {
                 return databaseService.getSpecificDao(e.getClass())
                         .deleteIds(items.stream().map(Entity::getId).collect(Collectors.toList()));
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
             return -1;
         });
@@ -85,7 +89,7 @@ public class NewYouRepo {
         try {
             return Optional.of((T) databaseService.getSpecificDao(clazz).queryForId(id));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return Optional.empty();
     }
@@ -97,7 +101,7 @@ public class NewYouRepo {
         try {
             items = (List<T>) databaseService.getSpecificDao(clazz).queryForAll();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
         return items;
@@ -109,12 +113,12 @@ public class NewYouRepo {
         try {
             success = databaseService.getSpecificDao(item.getClass()).refresh(item);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return success;
     }
 
-    private int intResultOperation(Supplier<Integer> operation){
+    private int intResultOperation(Supplier<Integer> operation) {
         int index;
         index = operation.get();
         return index;
