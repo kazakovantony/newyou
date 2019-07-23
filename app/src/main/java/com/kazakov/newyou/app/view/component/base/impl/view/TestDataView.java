@@ -30,6 +30,9 @@ import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.view.component.base.impl.PageAdapter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -96,6 +99,9 @@ refactor it to show these steps:
         initWorkoutsView();
         serviceConnectionListener.setWatchServiceHolder(watchConnectionServiceHolder);
         bindHandlersOnEvents();
+
+        Logger logger = LoggerFactory.getLogger(TestDataView.class);
+        logger.debug("hello log");
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
