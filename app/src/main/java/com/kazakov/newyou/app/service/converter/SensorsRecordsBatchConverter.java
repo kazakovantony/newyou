@@ -47,7 +47,7 @@ public class SensorsRecordsBatchConverter {
 
     private PredictedExercise createExercise(PredictionResult predictionResult, Workout workout) {
         PredictedExercise predictedExercise = new PredictedExercise();
-        predictedExercise.setIterationAmount(predictionResult.number_of_repeats);
+        predictedExercise.setIterationAmount(predictionResult.numberOfRepeats);
         predictedExercise.setType(predictionResult.activity);
         predictedExercise.setDuration(predictionResult.duration);
         predictedExercise.setWorkout(workout);
