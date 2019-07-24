@@ -1,51 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kazakov.newyou.app">
+    package="org.android10.viewgroupperformance">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="com.samsung.accessory.permission.ACCESSORY_FRAMEWORK" />
-    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
-    <uses-permission android:name="com.samsung.wmanager.ENABLE_NOTIFICATION" />
-    <uses-permission android:name="com.samsung.WATCH_APP_TYPE.Companion"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+  <application
+      android:allowBackup="false"
+      android:icon="@drawable/ic_launcher"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme">
+    <activity
+        android:name=".activity.MainActivity"
+        android:label="@string/app_name">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
 
-    <application
-        android:name="com.kazakov.newyou.app.App"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name="com.kazakov.newyou.app.view.component.base.impl.view.TestDataView"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <service android:name="com.kazakov.newyou.app.service.WatchConnectionService" />
-
-        <receiver android:name="com.samsung.android.sdk.accessory.RegisterUponInstallReceiver" >
-            <intent-filter>
-                <action android:name="com.samsung.accessory.action.REGISTER_AGENT" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.samsung.android.sdk.accessory.ServiceConnectionIndicationBroadcastReceiver" >
-            <intent-filter>
-                <action android:name="com.samsung.accessory.action.SERVICE_CONNECTION_REQUESTED" />
-            </intent-filter>
-        </receiver>
-
-        <meta-data
-            android:name="AccessoryServicesLocation"
-            android:value="/res/xml/accessoryservices.xml" />
-        <meta-data
-            android:name="GearAppType"
-            android:value="wgt" />
-    </application>
+    <activity
+        android:name=".activity.RelativeLayoutTestActivity"
+        android:label="@string/relative_layout_test">
+    </activity>
+    <activity
+        android:name=".activity.LinearLayoutTestActivity"
+        android:label="@string/linear_layout_test">
+    </activity>
+    <activity
+        android:name=".activity.FrameLayoutTestActivity"
+        android:label="@string/frame_layout_test">
+    </activity>
+  </application>
 
 </manifest>
