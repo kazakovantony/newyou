@@ -10,14 +10,32 @@ public class PredictionResult {
     @Expose
     public String duration;
     @Expose
-    public int number_of_repeats;
+    public int numberOfRepeats;
+
+    public PredictionResult(GymActivity activity, String  duration, int numberOfRepeats) {
+        this.activity = activity;
+        this.duration = duration;
+        this.numberOfRepeats = numberOfRepeats;
+    }
+
+    public GymActivity getActivity() {
+        return activity;
+    }
+
+    public String  getDuration() {
+        return duration;
+    }
+
+    public int getNumberOfRepeats() {
+        return numberOfRepeats;
+    }
 
     @Override
     public String toString() {
         return "PredictionResult{" +
                 "activity='" + activity + '\'' +
                 ", duration='" + duration + '\'' +
-                ", number_of_repeats=" + number_of_repeats +
+                ", numberOfRepeats=" + numberOfRepeats +
                 '}';
     }
 }
