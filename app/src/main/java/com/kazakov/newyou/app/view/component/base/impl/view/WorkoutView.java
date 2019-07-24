@@ -28,12 +28,17 @@ import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 public class WorkoutView extends Fragment {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkoutView.class);
 
     @Inject
     WorkoutState workoutState;
@@ -73,7 +78,7 @@ public class WorkoutView extends Fragment {
                     workoutService.startWorkout();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         });
 
