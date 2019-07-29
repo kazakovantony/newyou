@@ -27,6 +27,7 @@ import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.UpdateViewEvent;
+import com.kazakov.newyou.app.service.performance.annotation.Time;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +99,7 @@ public class WorkoutView extends Fragment {
         getActivity().runOnUiThread(() -> workouts.add(event.getUpdateText()));
     }
 
+    @Time
     private void doPredict() throws IOException {
         List<SensorsRecordsBatch> forPredict = newYouRepo.findAll(SensorsRecordsBatch.class); //here should be only not predicted yet
         List<PredictionResult> predictedGymActivity = predictorService

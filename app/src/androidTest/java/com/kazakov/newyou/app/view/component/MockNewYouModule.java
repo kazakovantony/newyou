@@ -22,10 +22,6 @@ import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.utils.FileUtils;
-import com.kazakov.newyou.app.view.component.base.impl.creatingfragmentshelpers.ComponentCreatingProvider;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
