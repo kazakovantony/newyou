@@ -4,9 +4,11 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'me.oriley:android-aspectj-plugin:0.1'
     }
 }
 

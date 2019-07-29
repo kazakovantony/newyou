@@ -1,4 +1,4 @@
-package com.kazakov.newyou.app.view.component.base.impl.creatingfragmentshelpers;
+package com.kazakov.newyou.app.view.component.base.impl.helper;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,12 +13,12 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 
-public class ComponentCreatingProvider {
+public class ComponentProvider {
 
-    private final int cellSize = 250;
+    private static final int CELL_SIZE = 250;
 
     @Inject
-    public ComponentCreatingProvider() {
+    public ComponentProvider() {
     }
 
     public TextSwitcher createSimpleTextSwitcher(Context context, String text) {
@@ -27,9 +27,7 @@ public class ComponentCreatingProvider {
                 android.R.anim.fade_in));
         simpleTextSwitcher.setOutAnimation(AnimationUtils.loadAnimation(context,
                 android.R.anim.fade_out));
-        simpleTextSwitcher.setFactory(() -> {
-            return createSimpleTextView(text, context);
-        });
+        simpleTextSwitcher.setFactory(() -> createSimpleTextView(text, context));
         simpleTextSwitcher.setCurrentText(text);
         return simpleTextSwitcher;
     }
@@ -38,7 +36,7 @@ public class ComponentCreatingProvider {
         TextView textView = new TextView(context);
         textView.setText(text);
         textView.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-        textView.setWidth(cellSize);
+        textView.setWidth(CELL_SIZE);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setTextColor(Color.BLACK);
         return textView;
