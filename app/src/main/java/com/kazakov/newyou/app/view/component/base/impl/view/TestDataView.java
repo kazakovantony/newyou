@@ -28,6 +28,7 @@ import com.kazakov.newyou.app.service.WatchServiceHolder;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
+import com.kazakov.newyou.app.service.performance.annotation.Time;
 import com.kazakov.newyou.app.view.component.base.impl.PageAdapter;
 
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class TestDataView extends AppCompatActivity {
     WatchConnectionProvider watchConnectionProvider;
     @Inject
     SensorsRecordsBatchConverter converter;
-   // Toolbar toolbar;
+    // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
     TabItem workoutTab;
@@ -86,7 +87,7 @@ refactor it to show these steps:
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tablayout);
 
-     //   setSupportActionBar(toolbar);
+        //   setSupportActionBar(toolbar);
         workoutTab = findViewById(R.id.tabWorkout);
         predictionTab = findViewById(R.id.tabPrediction);
         viewPager = findViewById(R.id.viewPager);
@@ -107,7 +108,7 @@ refactor it to show these steps:
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
                     //toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
-                      //      R.color.colorAccent));
+                    //      R.color.colorAccent));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
                             R.color.colorAccent));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -116,7 +117,7 @@ refactor it to show these steps:
                     }
                 } else if (tab.getPosition() == 2) {
                     //toolbar.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
-                      //      android.R.color.darker_gray));
+                    //      android.R.color.darker_gray));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
                             android.R.color.darker_gray));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -125,8 +126,8 @@ refactor it to show these steps:
                     }
                 } else {
 
-                   // toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
-                     //       R.color.colorPrimary));
+                    // toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
+                    //       R.color.colorPrimary));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
                             R.color.colorPrimary));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -151,17 +152,18 @@ refactor it to show these steps:
 
     private void bindHandlersOnEvents() {
         eventService.addEventHandler(this::dataReceiveHandle, DataReceiveEvent.class);
-       // eventService.addEventHandler(this::updateTextViewHandle, UpdateViewEvent.class);
+        // eventService.addEventHandler(this::updateTextViewHandle, UpdateViewEvent.class);
     }
 
     private void initWorkoutsView() {
         //part of workout tab
-       // workouts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        // workouts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
         //listView = findViewById(R.id.workouts);
         //listView.setAdapter(workouts);
     }
 
-    private void dataReceiveHandle(DataReceiveEvent dataReceiveEvent) {
+    @Time
+    void dataReceiveHandle(DataReceiveEvent dataReceiveEvent) {
         //runOnUiThread(messageAdapter.addMessageTask(dataReceiveEvent.getMessage()));
         //messagesView.setSelection(messageAdapter.getCount() - 1);
         List<SensorsRecord> sensorsRecords = jsonService
