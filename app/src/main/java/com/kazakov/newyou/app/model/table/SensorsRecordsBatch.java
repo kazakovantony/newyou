@@ -16,6 +16,13 @@ public class SensorsRecordsBatch implements Entity {
     @DatabaseField(columnName = "sensors_records")
     private String sensorsRecords;
 
+    @DatabaseField(foreign = true, columnName = "workout", canBeNull = false)
+    private Workout workout;
+
+    public Workout getWorkout() { return workout; }
+
+    public void setWorkout(Workout workout) { this.workout = workout; }
+
     public int getId() {
         return id;
     }

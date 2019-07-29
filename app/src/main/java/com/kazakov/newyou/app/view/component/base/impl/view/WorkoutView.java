@@ -40,6 +40,7 @@ import javax.inject.Inject;
 public class WorkoutView extends Fragment {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkoutView.class);
+    private int workoutId;
 
     @Inject
     WorkoutState workoutState;
@@ -76,6 +77,7 @@ public class WorkoutView extends Fragment {
                     workoutService.stopWorkout();
                     doPredict();
                 } else {
+                    //create workout -> save identifier into ram
                     workoutService.startWorkout();
                 }
             } catch (IOException e) {
@@ -101,7 +103,7 @@ public class WorkoutView extends Fragment {
 
     @Time
     private void doPredict() throws IOException {
-        List<SensorsRecordsBatch> forPredict = newYouRepo.findAll(SensorsRecordsBatch.class); //here should be only not predicted yet
+        List<SensorsRecordsBatch> forPredict = newYouRepo.findAll(SensorsRecordsBatch.class); // connect with workout by id and find current
         List<PredictionResult> predictedGymActivity = predictorService
                 .predict(converter.convertToRecords(forPredict));
         Workout workout = converter.createWorkout();

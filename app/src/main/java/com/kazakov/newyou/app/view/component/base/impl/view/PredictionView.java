@@ -20,7 +20,8 @@ import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.GymActivity;
 import com.kazakov.newyou.app.model.json.PredictionResult;
-import com.kazakov.newyou.app.view.component.base.impl.helper.ComponentProvider;
+import com.kazakov.newyou.app.service.PredictorService;
+import com.kazakov.newyou.app.view.component.base.impl.creatingfragmentshelpers.ComponentCreatingProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,13 +33,16 @@ import javax.inject.Inject;
 public class PredictionView extends Fragment {
 
     @Inject
-    ComponentProvider componentProvider;
+    ComponentCreatingProvider componentCreatingProvider;
+
     private RelativeLayout currentFrame;
     private TableLayout tableLayout;
     private final int prevActivityIndex = 0;
     private final int nextActivityIndex = 2;
     private final int prevNumberOfReactsIndex = 4;
     private final int nextNumberOfRepastsIndex = 6;
+    @Inject
+    PredictorService predictionResults;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +65,7 @@ public class PredictionView extends Fragment {
     }
 
     private void renderView(List<PredictionResult> predictionResults) {
+
         setToggleButtonListener(predictionResults);
         tableLayout.setShrinkAllColumns(true);
         predictionResults.forEach(p -> tableLayout.addView(addPredictionToRow(p)));
@@ -69,17 +74,17 @@ public class PredictionView extends Fragment {
     private TableRow addPredictionToRow(PredictionResult p) {
         TableRow tableRow = new TableRow(tableLayout.getContext());
         createActivityInfoCell(p.getActivity().toString(), tableRow);
-        tableRow.addView(componentProvider.createSimpleTextView(p.getDuration(), tableRow.getContext()));
+        tableRow.addView(componentCreatingProvider.createSimpleTextView(p.getDuration(), tableRow.getContext()));
         createNumberOfRepeatCell(Integer.toString(p.getNumberOfRepeats()), tableRow);
         return tableRow;
     }
 
     private void createActivityInfoCell(String text, TableRow row) {
         List<String> texts = activityToStringList();
-        TextSwitcher simpleTextSwitcher = componentProvider.createSimpleTextSwitcher(row.getContext(), text);
-        Button btnNext = componentProvider.createInvisibleButton(row.getContext(), R.drawable.turn_right);
+        TextSwitcher simpleTextSwitcher = componentCreatingProvider.createSimpleTextSwitcher(row.getContext(), text);
+        Button btnNext = componentCreatingProvider.createInvisibleButton(row.getContext(), R.drawable.turn_right);
         btnNext.setOnClickListener(v -> moveTextRight(texts, simpleTextSwitcher));
-        Button btnPrev = componentProvider.createInvisibleButton(row.getContext(), R.drawable.turn_left);
+        Button btnPrev = componentCreatingProvider.createInvisibleButton(row.getContext(), R.drawable.turn_left);
         btnPrev.setOnClickListener(v -> moveTextLeft(texts, simpleTextSwitcher));
         row.addView(btnPrev);
         row.addView(simpleTextSwitcher);
@@ -88,10 +93,10 @@ public class PredictionView extends Fragment {
     }
 
     private void createNumberOfRepeatCell(String text, TableRow row) {
-        TextSwitcher textSwitcher = componentProvider.createSimpleTextSwitcher(row.getContext(), text);
-        Button btnPlus = componentProvider.createInvisibleButton(row.getContext(), R.drawable.turn_right);
+        TextSwitcher textSwitcher = componentCreatingProvider.createSimpleTextSwitcher(row.getContext(), text);
+        Button btnPlus = componentCreatingProvider.createInvisibleButton(row.getContext(), R.drawable.turn_right);
         btnPlus.setOnClickListener(v -> setIncreasedNumbersOfRepeats(textSwitcher));
-        Button btnMinus = componentProvider.createInvisibleButton(row.getContext(), R.drawable.turn_left);
+        Button btnMinus = componentCreatingProvider.createInvisibleButton(row.getContext(), R.drawable.turn_left);
         btnMinus.setOnClickListener(v -> setDecreasedNumbersOfRepeats(textSwitcher));
         row.addView(btnMinus);
         row.addView(textSwitcher);
@@ -163,20 +168,21 @@ public class PredictionView extends Fragment {
     private void makeButtonsInPredictionTableInvisible(List<PredictionResult> results) {
         for (int i = 0; i < results.size(); i++) {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
-            componentProvider.setViabilityOfButton(row, prevActivityIndex, false, View.INVISIBLE);
-            componentProvider.setViabilityOfButton(row, nextActivityIndex, false, View.INVISIBLE);
-            componentProvider.setViabilityOfButton(row, prevNumberOfReactsIndex, false, View.INVISIBLE);
-            componentProvider.setViabilityOfButton(row, nextNumberOfRepastsIndex, false, View.INVISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, prevActivityIndex, false, View.INVISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, nextActivityIndex, false, View.INVISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, prevNumberOfReactsIndex, false, View.INVISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, nextNumberOfRepastsIndex, false, View.INVISIBLE);
         }
     }
 
     private void makeHidedButtonsInPredictionTableVisible(List<PredictionResult> results) {
         for (int i = 0; i < results.size(); i++) {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
-            componentProvider.setViabilityOfButton(row, prevActivityIndex, true, View.VISIBLE);
-            componentProvider.setViabilityOfButton(row, nextActivityIndex, true, View.VISIBLE);
-            componentProvider.setViabilityOfButton(row, prevNumberOfReactsIndex, true, View.VISIBLE);
-            componentProvider.setViabilityOfButton(row, nextNumberOfRepastsIndex, true, View.VISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, prevActivityIndex, true, View.VISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, nextActivityIndex, true, View.VISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, prevNumberOfReactsIndex, true, View.VISIBLE);
+            componentCreatingProvider.setViabilityOfButton(row, nextNumberOfRepastsIndex, true, View.VISIBLE);
         }
     }
+
 }

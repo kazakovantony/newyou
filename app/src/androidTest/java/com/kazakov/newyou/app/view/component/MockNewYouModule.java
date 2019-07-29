@@ -9,8 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.constants.TestConstant;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
-import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
@@ -36,7 +36,10 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Module
 public class MockNewYouModule {
