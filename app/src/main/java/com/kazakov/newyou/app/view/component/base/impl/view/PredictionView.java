@@ -47,7 +47,6 @@ public class PredictionView extends Fragment {
         setHasOptionsMenu(true);
         currentFrame = (RelativeLayout) inflater.inflate(R.layout.fragment_prediction, container, false);
         tableLayout = currentFrame.findViewById(R.id.tableLayout);
-        renderView(null);
         return currentFrame;
     }
 
