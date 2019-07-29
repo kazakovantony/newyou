@@ -1,11 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-  <string name="app_name">ViewGroup Performance</string>
-  <string name="url">http://www.android10.org/</string>
-
-  <string name="relative_layout_test">Relative Layout Test</string>
-  <string name="linear_layout_test">Linear Layout Test</string>
-  <string name="frame_layout_test">Frame Layout Test</string>
-
+    <string name="app_name">Android Aspect Example</string>
+    <string name="button_1">Button 1</string>
+    <string name="button_2">Button 2</string>=
 </resources>
