@@ -20,8 +20,8 @@ import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.GymActivity;
 import com.kazakov.newyou.app.model.json.PredictionResult;
-import com.kazakov.newyou.app.service.PredictorService;
-import com.kazakov.newyou.app.view.component.base.impl.creatingfragmentshelpers.ComponentCreatingProvider;
+import com.kazakov.newyou.app.service.holders.WorkoutController;
+import com.kazakov.newyou.app.view.component.base.impl.helper.ComponentProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +33,10 @@ import javax.inject.Inject;
 public class PredictionView extends Fragment {
 
     @Inject
-    ComponentCreatingProvider componentCreatingProvider;
+    ComponentProvider componentCreatingProvider;
+
+    @Inject
+    WorkoutController workoutController;
 
     private RelativeLayout currentFrame;
     private TableLayout tableLayout;
@@ -41,8 +44,7 @@ public class PredictionView extends Fragment {
     private final int nextActivityIndex = 2;
     private final int prevNumberOfReactsIndex = 4;
     private final int nextNumberOfRepastsIndex = 6;
-    @Inject
-    PredictorService predictionResults;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +62,7 @@ public class PredictionView extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        renderView(null);
+        renderView(workoutController.getPredictedResult());
         return true;
     }
 

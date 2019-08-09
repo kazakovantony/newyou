@@ -4,10 +4,15 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.widget.ToggleButton;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
@@ -27,10 +32,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 
 import static org.junit.Assert.assertEquals;
 
@@ -75,7 +76,8 @@ public class TestDataViewTest {
         ToggleButton changeMode = activityRule.getActivity().findViewById(R.id.toggleButton);
         activityRule.getActivity().runOnUiThread(changeMode::performClick);
         eventService.triggerEvent(new DataReceiveEvent(json.getBytes()));
-        List<SensorsRecordsBatch> recordsBatches = newYouRepo.findAll(SensorsRecordsBatch.class);
+        Workout w =activityRule.getActivity().w;
+        List<SensorsRecordsBatch> recordsBatches = newYouRepo.findMatches(SensorsRecordsBatch.class,w,"workout");
         List<SensorsRecord> batches = recordsBatches.stream()
                 .map(i -> deserialize(i.getSensorsRecords())).flatMap(List::stream)
                 .collect(Collectors.toList());

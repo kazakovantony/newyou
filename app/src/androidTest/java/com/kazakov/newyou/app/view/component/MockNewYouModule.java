@@ -21,6 +21,7 @@ import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
+import com.kazakov.newyou.app.service.holders.WorkoutController;
 import com.kazakov.newyou.app.utils.FileUtils;
 
 import org.slf4j.Logger;
@@ -134,14 +135,10 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    WorkoutService workoutServiceProvider() {
+    WorkoutService workoutServiceProvider() throws IOException {
         WorkoutService workoutService = mock(WorkoutService.class);
-        doNothing().when(workoutService).startWorkout();
-        try {
-            doNothing().when(workoutService).stopWorkout();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+        doNothing().when(workoutService).startActivity();
+        doNothing().when(workoutService).stopWorkout();
         return workoutService;
     }
 
@@ -167,6 +164,12 @@ public class MockNewYouModule {
     @Singleton
     SensorsRecordsBatchConverter provideSensorsRecordsBatchConverter(JsonService jsonService) {
         return new SensorsRecordsBatchConverter(jsonService);
+    }
+
+    @Provides
+    @Singleton
+    WorkoutController workoutController(){
+        return new WorkoutController();
     }
 
     public void setApp(App app) {

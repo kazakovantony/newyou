@@ -23,9 +23,10 @@ public class SensorsRecordsBatchConverter {
         this.jsonService = jsonService;
     }
 
-    public SensorsRecordsBatch convert(String sensorsRecords) {
+    public SensorsRecordsBatch convert(String sensorsRecords, Workout workout) {
         SensorsRecordsBatch sensorsRecordsBatch = new SensorsRecordsBatch();
         sensorsRecordsBatch.setSensorsRecords(sensorsRecords);
+        sensorsRecordsBatch.setWorkout(workout);
         return sensorsRecordsBatch;
     }
 

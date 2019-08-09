@@ -10,8 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kazakov.newyou.app.App;
@@ -20,6 +18,7 @@ import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.GymActivity;
 import com.kazakov.newyou.app.model.WorkoutState;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
@@ -43,8 +42,6 @@ public class TestDataView extends AppCompatActivity {
 
     @Inject
     EventService eventService;
-    ListView listView;
-    ArrayAdapter<String> workouts;
     @Inject
     NewYouRepo newYouRepo;
     @Inject
@@ -61,12 +58,18 @@ public class TestDataView extends AppCompatActivity {
     WatchConnectionProvider watchConnectionProvider;
     @Inject
     SensorsRecordsBatchConverter converter;
-   // Toolbar toolbar;
+    // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
     TabItem workoutTab;
     TabItem predictionTab;
     PageAdapter pageAdapter;
+
+    public Workout getW() {
+        return w;
+    }
+
+    Workout w;
 
 
     @Override
@@ -86,7 +89,7 @@ refactor it to show these steps:
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tablayout);
 
-     //   setSupportActionBar(toolbar);
+        //   setSupportActionBar(toolbar);
         workoutTab = findViewById(R.id.tabWorkout);
         predictionTab = findViewById(R.id.tabPrediction);
         viewPager = findViewById(R.id.viewPager);
@@ -107,7 +110,7 @@ refactor it to show these steps:
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
                     //toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
-                      //      R.color.colorAccent));
+                    //      R.color.colorAccent));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
                             R.color.colorAccent));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -116,7 +119,7 @@ refactor it to show these steps:
                     }
                 } else if (tab.getPosition() == 2) {
                     //toolbar.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
-                      //      android.R.color.darker_gray));
+                    //      android.R.color.darker_gray));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
                             android.R.color.darker_gray));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -125,8 +128,8 @@ refactor it to show these steps:
                     }
                 } else {
 
-                   // toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
-                     //       R.color.colorPrimary));
+                    // toolbar.setBackgroundColor(ContextCompat.getColor(MainActivity.this,
+                    //       R.color.colorPrimary));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(TestDataView.this,
                             R.color.colorPrimary));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -151,12 +154,12 @@ refactor it to show these steps:
 
     private void bindHandlersOnEvents() {
         eventService.addEventHandler(this::dataReceiveHandle, DataReceiveEvent.class);
-       // eventService.addEventHandler(this::updateTextViewHandle, UpdateViewEvent.class);
+        // eventService.addEventHandler(this::updateTextViewHandle, UpdateViewEvent.class);
     }
 
     private void initWorkoutsView() {
         //part of workout tab
-       // workouts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        // workouts = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
         //listView = findViewById(R.id.workouts);
         //listView.setAdapter(workouts);
     }
@@ -165,10 +168,12 @@ refactor it to show these steps:
         // get workout id from ram and set to batch
         //runOnUiThread(messageAdapter.addMessageTask(dataReceiveEvent.getMessage()));
         //messagesView.setSelection(messageAdapter.getCount() - 1);
+        w = converter.createWorkout();
+        newYouRepo.create(w);
         List<SensorsRecord> sensorsRecords = jsonService
                 .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage()); // validation?
         LOGGER.debug("Data items received: {}", sensorsRecords.size());
-        newYouRepo.create(converter.convert(dataReceiveEvent.getMessage()));
+        newYouRepo.create(converter.convert(dataReceiveEvent.getMessage(), w));
     }
 
     private String getTextViewText(int id) {
