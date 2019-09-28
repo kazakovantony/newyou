@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.ActualExercise;
 import com.kazakov.newyou.app.model.table.PredictedExercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatchPredictedExercise;
@@ -30,9 +31,7 @@ import okhttp3.Response;
 
 public class PredictorService {
 
-    @Inject
     NewYouRepo newYouRepo;
-    @Inject
     SensorsRecordsBatchConverter converter;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PredictorService.class);
@@ -44,9 +43,11 @@ public class PredictorService {
     Gson gson;
 
     @Inject
-    public PredictorService(OkHttpClient httpClient, Gson gson) {
+    public PredictorService(OkHttpClient httpClient, Gson gson, NewYouRepo newYouRepo, SensorsRecordsBatchConverter converter) {
         this.httpClient = httpClient;
         this.gson = gson;
+        this.newYouRepo = newYouRepo;
+        this.converter = converter;
     }
 
     public List<PredictionResult> predict(List<SensorsRecord> data) {
@@ -85,7 +86,7 @@ public class PredictorService {
         StrictMode.setThreadPolicy(policy);
     }
 
-    public List<PredictedExercise> getPredictedExersise(Workout workout, List<PredictionResult> predictedGymActivity) {
+    public List<PredictedExercise> getPredictedExercise(Workout workout, List<PredictionResult> predictedGymActivity) {
         List<PredictedExercise> exercises = converter.createPredictedExercises(workout, predictedGymActivity);
         newYouRepo.create(exercises);
         return exercises;
@@ -95,5 +96,11 @@ public class PredictorService {
         List<SensorsRecordsBatchPredictedExercise> predictedExercises = converter.createSensorsRecordsBatchPredictedExercises(exercises, forPredict);
         newYouRepo.create(predictedExercises);
         return predictedExercises;
+    }
+
+    public List<ActualExercise> getActualExercise(Workout workout, List<PredictionResult> predictedGymActivity) {
+        List<ActualExercise> exercises = converter.createActualExercises(workout, predictedGymActivity);
+        newYouRepo.create(exercises);
+        return exercises;
     }
 }

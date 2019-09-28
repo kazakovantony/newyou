@@ -25,8 +25,10 @@ import com.kazakov.newyou.app.view.component.base.impl.helper.ComponentProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.inject.Inject;
 
@@ -41,8 +43,11 @@ public class PredictionView extends Fragment {
     private RelativeLayout currentFrame;
     private TableLayout tableLayout;
     private final int prevActivityIndex = 0;
+    private final int activityIndex = 1;
     private final int nextActivityIndex = 2;
+    private final int durationIndex = 3;
     private final int prevNumberOfReactsIndex = 4;
+    private final int numberOfRepeatsIndex = 5;
     private final int nextNumberOfRepastsIndex = 6;
 
 
@@ -53,6 +58,8 @@ public class PredictionView extends Fragment {
         setHasOptionsMenu(true);
         currentFrame = (RelativeLayout) inflater.inflate(R.layout.fragment_prediction, container, false);
         tableLayout = currentFrame.findViewById(R.id.tableLayout);
+        renderView(workoutController.getPredictedResult());
+        setAgreeButtonListener();
         return currentFrame;
     }
 
@@ -67,7 +74,6 @@ public class PredictionView extends Fragment {
     }
 
     private void renderView(List<PredictionResult> predictionResults) {
-
         setToggleButtonListener(predictionResults);
         tableLayout.setShrinkAllColumns(true);
         predictionResults.forEach(p -> tableLayout.addView(addPredictionToRow(p)));
@@ -132,8 +138,16 @@ public class PredictionView extends Fragment {
                 onToggleClicked(results);
             } else {
                 onToggleUnClicked(results);
+                workoutController.getActualExercises(getResults());
+
             }
         });
+    }
+
+    private void setAgreeButtonListener() {
+        final Button button = currentFrame.findViewById(R.id.agreeButton);
+        button.setOnClickListener(p -> workoutController.
+                getPredictedExercise(workoutController.getPredictedResult()));//не уверена на счет фабрики если у тебя есть методы которые уже реализуют логику)
     }
 
     public void onToggleUnClicked(List<PredictionResult> results) {
@@ -187,4 +201,18 @@ public class PredictionView extends Fragment {
         }
     }
 
+    public List<PredictionResult> getResults() {
+        List<PredictionResult> results = new LinkedList<>();
+        IntStream.range(1, tableLayout.getChildCount()-1)
+                .forEach(idx ->results.add((getPredictionResultFromRowByIndex(idx))));
+        return results;
+    }
+
+    private PredictionResult getPredictionResultFromRowByIndex(int index){
+        TableRow row =(TableRow) tableLayout.getChildAt(index);
+        return new PredictionResult(
+                (GymActivity.valueOf(componentCreatingProvider.getTextFromTextSwithcerFromTableRow(row, activityIndex)))
+                , componentCreatingProvider.getTextFromTestView(row, durationIndex)
+                , Integer.parseInt(componentCreatingProvider.getTextFromTextSwithcerFromTableRow(row, numberOfRepeatsIndex)));
+    }
 }

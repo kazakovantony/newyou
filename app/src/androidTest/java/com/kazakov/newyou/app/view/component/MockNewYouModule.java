@@ -135,7 +135,7 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    WorkoutService workoutServiceProvider() throws IOException {
+    WorkoutService workoutServiceProvider(){
         WorkoutService workoutService = mock(WorkoutService.class);
         doNothing().when(workoutService).startActivity();
         doNothing().when(workoutService).stopWorkout();
@@ -166,10 +166,12 @@ public class MockNewYouModule {
         return new SensorsRecordsBatchConverter(jsonService);
     }
 
+
     @Provides
     @Singleton
-    WorkoutController workoutController(){
-        return new WorkoutController();
+    WorkoutController workoutController(WorkoutService workoutService, PredictorService predictorService,
+                                        SensorsRecordsBatchConverter converter){
+        return new WorkoutController(workoutService, predictorService, converter);
     }
 
     public void setApp(App app) {

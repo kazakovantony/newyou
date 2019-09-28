@@ -70,7 +70,7 @@ dependencies {
 
     implementation 'org.slf4j:slf4j-api:1.7.26'
     implementation 'com.github.tony19:logback-android:2.0.0'
-    compile group: 'io.vavr', name: 'vavr', version: '0.9.3'
+    implementation group: 'io.vavr', name: 'vavr', version: '0.9.3'
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.mockito:mockito-core:${MOCKITO_VERSION}"

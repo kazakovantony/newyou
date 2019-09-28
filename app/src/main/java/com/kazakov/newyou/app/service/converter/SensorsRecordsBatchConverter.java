@@ -2,6 +2,7 @@ package com.kazakov.newyou.app.service.converter;
 
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.ActualExercise;
 import com.kazakov.newyou.app.model.table.PredictedExercise;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
 import com.kazakov.newyou.app.model.table.SensorsRecordsBatchPredictedExercise;
@@ -53,6 +54,20 @@ public class SensorsRecordsBatchConverter {
         predictedExercise.setDuration(predictionResult.duration);
         predictedExercise.setWorkout(workout);
         return predictedExercise;
+    }
+
+    private ActualExercise createActualExercise(PredictionResult predictionResult, Workout workout){
+        ActualExercise actualExercise= new ActualExercise();
+        actualExercise.setIterationAmount(predictionResult.numberOfRepeats);
+        actualExercise.setType(predictionResult.activity);
+        actualExercise.setDuration(predictionResult.duration);
+        actualExercise.setWorkout(workout);
+        return actualExercise;
+    }
+
+    public List<ActualExercise> createActualExercises(Workout workout, List<PredictionResult> predictedGymActivity){
+        return predictedGymActivity.stream().map(p -> createActualExercise(p, workout))
+                .collect(Collectors.toList());
     }
 
     public List<SensorsRecordsBatchPredictedExercise> createSensorsRecordsBatchPredictedExercises(List<PredictedExercise> exercises,

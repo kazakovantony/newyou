@@ -45,11 +45,23 @@
 
         <ToggleButton
             android:id="@+id/buttonEdit"
-            android:layout_width="match_parent"
+            android:layout_width="202dp"
             android:layout_height="wrap_content"
             android:textOff="Edit"
             android:textOn="Save">
+
         </ToggleButton>
+
+        <Button
+            android:id="@+id/agreeButton"
+            style="@android:style/Widget.Material.Button.Toggle"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/buttonEditRow"
+            android:text="Correct Prediction"
+            android:textAlignment="center"
+            android:textColor="#0E0A0A"
+            android:textSize="14sp"></Button>
 
     </TableRow>
 

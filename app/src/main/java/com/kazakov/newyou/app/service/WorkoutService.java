@@ -13,11 +13,9 @@ import javax.inject.Inject;
 
 public class WorkoutService {
 
-    @Inject
     NewYouRepo newYouRepo;
-    @Inject
     SensorsRecordsBatchConverter converter;
-        private Workout workout;
+    private Workout workout;
 
     WatchServiceHolder watchConnectionServiceHolder;
     WorkoutState workoutState;
@@ -35,16 +33,17 @@ public class WorkoutService {
         return workout;
     }
 
-    public void stopWorkout()  {
+    public void stopWorkout() {
         if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
             workoutState.setActive(false);
         }
     }
 
-    public void initWorkout(){
+    public void initWorkout() {
         watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService);
         watchConnectionServiceHolder.getWatchConnectionService().findPeers();
     }
+
     public void startActivity() {
         if (!watchConnectionServiceHolder.getWatchConnectionService().sendData("START")) {
 
@@ -55,12 +54,12 @@ public class WorkoutService {
         }
     }
 
-    public List<SensorsRecordsBatch> getDataForPredict(){
+    public List<SensorsRecordsBatch> getDataForPredict() {
         return newYouRepo.findMatches(SensorsRecordsBatch.class, workout, "workout");
 
     }
 
-    public void refreshWorkout(){
+    public void refreshWorkout() {
         newYouRepo.refresh(workout);
     }
 }

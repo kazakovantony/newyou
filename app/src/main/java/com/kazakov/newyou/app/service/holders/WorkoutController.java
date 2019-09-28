@@ -1,7 +1,9 @@
 package com.kazakov.newyou.app.service.holders;
 
 import com.kazakov.newyou.app.model.json.PredictionResult;
+import com.kazakov.newyou.app.model.table.ActualExercise;
 import com.kazakov.newyou.app.model.table.PredictedExercise;
+import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
@@ -13,15 +15,28 @@ import javax.inject.Inject;
 
 public class WorkoutController {
 
-    @Inject
     WorkoutService workoutService;
-    @Inject
     PredictorService predictorService;
-    @Inject
     SensorsRecordsBatchConverter converter;
 
+    public List<PredictionResult> getSavedResults() {
+        return savedResults;
+    }
+
+    private List<PredictionResult> savedResults;
+
+    public void setSavedResults(List<PredictionResult> savedResults) {
+        this.savedResults = savedResults;
+
+    }
+
     @Inject
-    public WorkoutController(){}
+    public WorkoutController(WorkoutService workoutService, PredictorService predictorService,
+                             SensorsRecordsBatchConverter converter) {
+        this.workoutService = workoutService;
+        this.predictorService = predictorService;
+        this.converter = converter;
+    }
 
     public void startWorkout() {
         workoutService.initWorkout();
@@ -39,9 +54,17 @@ public class WorkoutController {
     @Time
     public void doPredict() {
         List<PredictionResult> predictedGymActivity = predictorService.predict(converter.convertToRecords(workoutService.getDataForPredict()));
-        List<PredictedExercise> exercises = predictorService.getPredictedExersise(workoutService.getWorkout(), predictedGymActivity);
+        List<PredictedExercise> exercises = predictorService.getPredictedExercise(workoutService.getWorkout(), predictedGymActivity);
         predictorService.getPredictedExercises(exercises, workoutService.getDataForPredict());
     }
 
+    public List<PredictedExercise> getPredictedExercise(List<PredictionResult> predictionResults) {
+        Workout w = converter.createWorkout();
+        return predictorService.getPredictedExercise(w, predictionResults);
+    }
 
+    public List<ActualExercise> getActualExercises(List<PredictionResult> predictionResults) {
+        Workout w = converter.createWorkout();
+        return predictorService.getActualExercise(w, predictionResults);
+    }
 }

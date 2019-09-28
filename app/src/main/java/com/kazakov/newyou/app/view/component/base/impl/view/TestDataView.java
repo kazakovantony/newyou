@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -24,6 +23,7 @@ import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.EventService;
 import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
@@ -58,11 +58,12 @@ public class TestDataView extends AppCompatActivity {
     WatchConnectionProvider watchConnectionProvider;
     @Inject
     SensorsRecordsBatchConverter converter;
+
+    @Inject
+    WorkoutService workoutService;
     // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
-    TabItem workoutTab;
-    TabItem predictionTab;
     PageAdapter pageAdapter;
 
     public Workout getW() {
@@ -90,8 +91,6 @@ refactor it to show these steps:
         tabLayout = findViewById(R.id.tablayout);
 
         //   setSupportActionBar(toolbar);
-        workoutTab = findViewById(R.id.tabWorkout);
-        predictionTab = findViewById(R.id.tabPrediction);
         viewPager = findViewById(R.id.viewPager);
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
