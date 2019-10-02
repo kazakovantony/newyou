@@ -3,12 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:visibility="visible">
+    <TableRow
+        android:id="@+id/buttonEditRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
 
+        <ToggleButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:textOff="Edit"
+            android:textOn="Save">
+
+        </ToggleButton>
+
+        <Button
+            android:id="@+id/agreeButton"
+            style="@android:style/Widget.Material.Button.Toggle"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/buttonEditRow"
+            android:text="Correct Prediction"
+            android:textAlignment="center"
+            android:textColor="#0E0A0A"
+            android:textSize="14sp"></Button>
+
+    </TableRow>
     <TableRow
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/buttonEditRow">
 
         <TextView
             android:layout_width="match_parent"
@@ -36,40 +63,12 @@
 
         </TextView>
     </TableRow>
-    <TableRow
-        android:id="@+id/buttonEditRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/header">
-
-        <ToggleButton
-            android:id="@+id/buttonEdit"
-            android:layout_width="202dp"
-            android:layout_height="wrap_content"
-            android:textOff="Edit"
-            android:textOn="Save">
-
-        </ToggleButton>
-
-        <Button
-            android:id="@+id/agreeButton"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="202dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/buttonEditRow"
-            android:text="Correct Prediction"
-            android:textAlignment="center"
-            android:textColor="#0E0A0A"
-            android:textSize="14sp"></Button>
-
-    </TableRow>
 
     <ScrollView
         android:id="@+id/scrollable"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@+id/buttonEditRow">
+        android:layout_below="@+id/header">
 
         <TableLayout
             android:id="@+id/tableLayout"
