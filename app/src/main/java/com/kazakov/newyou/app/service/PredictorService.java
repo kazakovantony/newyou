@@ -6,6 +6,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.ActualExercise;
+import com.kazakov.newyou.app.model.table.PredictedExercise;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatchPredictedExercise;
+import com.kazakov.newyou.app.model.table.Workout;
+import com.kazakov.newyou.app.repository.NewYouRepo;
+import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +31,9 @@ import okhttp3.Response;
 
 public class PredictorService {
 
+    NewYouRepo newYouRepo;
+    SensorsRecordsBatchConverter converter;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PredictorService.class);
 
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -33,22 +43,26 @@ public class PredictorService {
     Gson gson;
 
     @Inject
-    public PredictorService(OkHttpClient httpClient, Gson gson) {
+    public PredictorService(OkHttpClient httpClient, Gson gson, NewYouRepo newYouRepo, SensorsRecordsBatchConverter converter) {
         this.httpClient = httpClient;
         this.gson = gson;
+        this.newYouRepo = newYouRepo;
+        this.converter = converter;
     }
 
-    public List<PredictionResult> predict(List<SensorsRecord> data) throws IOException {
-
+    public List<PredictionResult> predict(List<SensorsRecord> data) {
         enableHttpCallFromUiThread();
-
         String strJson = gson.toJson(data);
-
         Request request = createRequest(strJson);
-        Response response = httpClient.newCall(request).execute();
-        LOGGER.debug("Prediction response status: {}", response.code());
-
-        String res = response.body().string();
+        Response response;
+        String res = null;
+        try {
+            response = httpClient.newCall(request).execute();
+            LOGGER.debug("Prediction response status: {}", response.code());
+            res = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return desirializePredictionResults(res);
     }
 
@@ -70,5 +84,23 @@ public class PredictorService {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    public List<PredictedExercise> getPredictedExercise(Workout workout, List<PredictionResult> predictedGymActivity) {
+        List<PredictedExercise> exercises = converter.createPredictedExercises(workout, predictedGymActivity);
+        newYouRepo.create(exercises);
+        return exercises;
+    }
+
+    public List<SensorsRecordsBatchPredictedExercise> getPredictedExercises(List<PredictedExercise> exercises, List<SensorsRecordsBatch> forPredict) {
+        List<SensorsRecordsBatchPredictedExercise> predictedExercises = converter.createSensorsRecordsBatchPredictedExercises(exercises, forPredict);
+        newYouRepo.create(predictedExercises);
+        return predictedExercises;
+    }
+
+    public List<ActualExercise> getActualExercise(Workout workout, List<PredictionResult> predictedGymActivity) {
+        List<ActualExercise> exercises = converter.createActualExercises(workout, predictedGymActivity);
+        newYouRepo.create(exercises);
+        return exercises;
     }
 }

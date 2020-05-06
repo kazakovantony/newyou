@@ -9,8 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.constants.TestConstant;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
-import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.json.PredictionResult;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
@@ -21,6 +21,7 @@ import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
+import com.kazakov.newyou.app.service.holders.WorkoutController;
 import com.kazakov.newyou.app.utils.FileUtils;
 
 import org.slf4j.Logger;
@@ -36,7 +37,10 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Module
 public class MockNewYouModule {
@@ -131,14 +135,10 @@ public class MockNewYouModule {
 
     @Provides
     @Singleton
-    WorkoutService workoutServiceProvider() {
+    WorkoutService workoutServiceProvider(){
         WorkoutService workoutService = mock(WorkoutService.class);
-        doNothing().when(workoutService).startWorkout();
-        try {
-            doNothing().when(workoutService).stopWorkout();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+        doNothing().when(workoutService).startActivity();
+        doNothing().when(workoutService).stopWorkout();
         return workoutService;
     }
 
@@ -164,6 +164,14 @@ public class MockNewYouModule {
     @Singleton
     SensorsRecordsBatchConverter provideSensorsRecordsBatchConverter(JsonService jsonService) {
         return new SensorsRecordsBatchConverter(jsonService);
+    }
+
+
+    @Provides
+    @Singleton
+    WorkoutController workoutController(WorkoutService workoutService, PredictorService predictorService,
+                                        SensorsRecordsBatchConverter converter){
+        return new WorkoutController(workoutService, predictorService, converter);
     }
 
     public void setApp(App app) {

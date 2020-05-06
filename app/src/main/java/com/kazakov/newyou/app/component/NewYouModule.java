@@ -13,9 +13,11 @@ import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchConnectionService;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.database.DatabaseService;
 import com.kazakov.newyou.app.service.event.EventService;
+import com.kazakov.newyou.app.service.holders.WorkoutController;
 
 import javax.inject.Singleton;
 
@@ -84,8 +86,8 @@ public class NewYouModule {
 
     @Provides
     @Singleton
-    PredictorService providePredictorService(Gson gson, OkHttpClient okHttpClient) {
-        return new PredictorService(okHttpClient, gson);
+    PredictorService providePredictorService(Gson gson, OkHttpClient okHttpClient, NewYouRepo newYouRepo, SensorsRecordsBatchConverter converter) {
+        return new PredictorService(okHttpClient, gson, newYouRepo, converter);
     }
 
     @Provides
@@ -117,6 +119,14 @@ public class NewYouModule {
     SensorsRecordsBatchConverter provideSensorsRecordsBatchConverter(JsonService jsonService) {
         return new SensorsRecordsBatchConverter(jsonService);
     }
+
+    @Provides
+    @Singleton
+    WorkoutController workoutController(WorkoutService workoutService, PredictorService predictorService,
+                                        SensorsRecordsBatchConverter converter) {
+        return new WorkoutController(workoutService, predictorService, converter);
+    }
+
 
     public void setApp(App app) {
         this.app = app;

@@ -1,13 +1,21 @@
 package com.kazakov.newyou.app.service;
 
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.table.SensorsRecordsBatch;
+import com.kazakov.newyou.app.model.table.Workout;
+import com.kazakov.newyou.app.repository.NewYouRepo;
+import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
 import com.kazakov.newyou.app.service.event.EventService;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class WorkoutService {
+
+    NewYouRepo newYouRepo;
+    SensorsRecordsBatchConverter converter;
+    private Workout workout;
 
     WatchServiceHolder watchConnectionServiceHolder;
     WorkoutState workoutState;
@@ -21,23 +29,37 @@ public class WorkoutService {
         this.eventService = eventService;
     }
 
-    public void stopWorkout() throws IOException {
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void stopWorkout() {
         if (watchConnectionServiceHolder.getWatchConnectionService().closeConnection()) {
-            //  ((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStart);
             workoutState.setActive(false);
-        //    doPredict();
         }
     }
 
-    public void startWorkout() {
-        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService); // it should be done during init, not start workout
-        watchConnectionServiceHolder.getWatchConnectionService().findPeers(); // it should be done during init, not start workout
+    public void initWorkout() {
+        watchConnectionServiceHolder.getWatchConnectionService().setEventService(eventService);
+        watchConnectionServiceHolder.getWatchConnectionService().findPeers();
+    }
+
+    public void startActivity() {
         if (!watchConnectionServiceHolder.getWatchConnectionService().sendData("START")) {
-    //        Toast.makeText(getActivity().getApplicationContext(),
-      //              R.string.watchIsNotReachable, Toast.LENGTH_LONG).show();
+
         } else {
             workoutState.setActive(true);
-            //((Button) getActivity().findViewById(R.id.buttonChangeMode)).setText(R.string.buttonStop);
+            workout = converter.createWorkout();
+            newYouRepo.create(workout);
         }
+    }
+
+    public List<SensorsRecordsBatch> getDataForPredict() {
+        return newYouRepo.findMatches(SensorsRecordsBatch.class, workout, "workout");
+
+    }
+
+    public void refreshWorkout() {
+        newYouRepo.refresh(workout);
     }
 }

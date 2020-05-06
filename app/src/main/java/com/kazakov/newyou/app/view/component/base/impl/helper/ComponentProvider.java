@@ -54,4 +54,14 @@ public class ComponentProvider {
         viewGroup.getChildAt(index).setEnabled(status);
         viewGroup.getChildAt(index).setVisibility(visibility);
     }
+
+    public String getTextFromTextSwithcerFromTableRow(ViewGroup view , int index){
+        TextSwitcher textSwitcher = (TextSwitcher) view.getChildAt(index);
+        TextView textView = (TextView) textSwitcher.getCurrentView();
+        return textView.getText().toString();
+    }
+
+    public String getTextFromTestView(ViewGroup view, int index){
+        return ((TextView)view.getChildAt(index)).getText().toString();
+    }
 }

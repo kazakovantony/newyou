@@ -4,31 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kazakov.newyou.app.App;
 import com.kazakov.newyou.app.R;
 import com.kazakov.newyou.app.listener.ServiceConnectionListener;
 import com.kazakov.newyou.app.model.GymActivity;
-import com.kazakov.newyou.app.model.json.SensorsRecord;
 import com.kazakov.newyou.app.model.WorkoutState;
+import com.kazakov.newyou.app.model.json.SensorsRecord;
+import com.kazakov.newyou.app.model.table.Workout;
 import com.kazakov.newyou.app.repository.NewYouRepo;
 import com.kazakov.newyou.app.service.JsonService;
 import com.kazakov.newyou.app.service.PredictorService;
 import com.kazakov.newyou.app.service.WatchConnectionProvider;
 import com.kazakov.newyou.app.service.WatchServiceHolder;
+import com.kazakov.newyou.app.service.WorkoutService;
 import com.kazakov.newyou.app.service.converter.SensorsRecordsBatchConverter;
-import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.service.event.EventService;
-import com.kazakov.newyou.app.service.performance.annotation.Time;
+import com.kazakov.newyou.app.service.event.base.impl.DataReceiveEvent;
 import com.kazakov.newyou.app.view.component.base.impl.PageAdapter;
 
 import org.slf4j.Logger;
@@ -44,8 +42,6 @@ public class TestDataView extends AppCompatActivity {
 
     @Inject
     EventService eventService;
-    ListView listView;
-    ArrayAdapter<String> workouts;
     @Inject
     NewYouRepo newYouRepo;
     @Inject
@@ -62,12 +58,19 @@ public class TestDataView extends AppCompatActivity {
     WatchConnectionProvider watchConnectionProvider;
     @Inject
     SensorsRecordsBatchConverter converter;
+
+    @Inject
+    WorkoutService workoutService;
     // Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
-    TabItem workoutTab;
-    TabItem predictionTab;
     PageAdapter pageAdapter;
+
+    public Workout getW() {
+        return w;
+    }
+
+    Workout w;
 
 
     @Override
@@ -88,8 +91,6 @@ refactor it to show these steps:
         tabLayout = findViewById(R.id.tablayout);
 
         //   setSupportActionBar(toolbar);
-        workoutTab = findViewById(R.id.tabWorkout);
-        predictionTab = findViewById(R.id.tabPrediction);
         viewPager = findViewById(R.id.viewPager);
 
         pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -162,14 +163,16 @@ refactor it to show these steps:
         //listView.setAdapter(workouts);
     }
 
-    @Time
-    void dataReceiveHandle(DataReceiveEvent dataReceiveEvent) {
+    private void dataReceiveHandle(DataReceiveEvent dataReceiveEvent) {
+        // get workout id from ram and set to batch
         //runOnUiThread(messageAdapter.addMessageTask(dataReceiveEvent.getMessage()));
         //messagesView.setSelection(messageAdapter.getCount() - 1);
+        w = converter.createWorkout();
+        newYouRepo.create(w);
         List<SensorsRecord> sensorsRecords = jsonService
                 .deserializeJsonArray(SensorsRecord[].class, dataReceiveEvent.getMessage()); // validation?
         LOGGER.debug("Data items received: {}", sensorsRecords.size());
-        newYouRepo.create(converter.convert(dataReceiveEvent.getMessage()));
+        newYouRepo.create(converter.convert(dataReceiveEvent.getMessage(), w));
     }
 
     private String getTextViewText(int id) {

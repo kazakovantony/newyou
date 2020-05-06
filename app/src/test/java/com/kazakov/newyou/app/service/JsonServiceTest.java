@@ -17,18 +17,21 @@ public class JsonServiceTest {
     @Test
     public void deserializeJsonArray() {
 
+        //given
         SensorsRecord sensorsRecord = new SensorsRecord();
         sensorsRecord.time = 9000909;
         sensorsRecord.ax = 90;
         sensorsRecord.az = 100;
         sensorsRecord.ay = 90001912;
         sensorsRecord.magn_z = 901;
-
         List<SensorsRecord> test = new ArrayList<>();
         test.add(sensorsRecord);
         String json = jsonService.gson.toJson(test);
 
+        //when
         List<SensorsRecord> result = jsonService.deserializeJsonArray(SensorsRecord[].class, json);
+
+        //then
         assertEquals(test, result);
     }
 }
